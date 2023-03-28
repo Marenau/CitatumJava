@@ -28,12 +28,12 @@
             android:gravity="center"
             android:text="@string/left_menu_category_settings_text"
             android:textColor="@color/light_blue"
-            android:textSize="@dimen/navigation_left_text"
+            android:textSize="@dimen/left_menu_text"
             app:drawableStartCompat="@drawable/settings_icon" />
 
         <ImageView
             android:id="@+id/lm_first_division_rectangle"
-            android:layout_width="@dimen/navigation_rectangle_width"
+            android:layout_width="@dimen/left_menu_rectangle_width"
             android:layout_height="3dp"
             android:layout_gravity="center"
             android:layout_marginTop="24dp"
@@ -52,12 +52,12 @@
             android:gravity="center"
             android:text="@string/left_menu_category_pencil_text"
             android:textColor="@color/black"
-            android:textSize="@dimen/navigation_left_text"
+            android:textSize="@dimen/left_menu_text"
             app:drawableStartCompat="@drawable/pencil_icon" />
 
         <ImageView
             android:id="@+id/lm_second_division_rectangle"
-            android:layout_width="@dimen/navigation_rectangle_width"
+            android:layout_width="@dimen/left_menu_rectangle_width"
             android:layout_height="3dp"
             android:layout_gravity="center"
             android:layout_marginTop="24dp"
@@ -76,7 +76,7 @@
             android:gravity="center"
             android:text="@string/left_menu_category_hub_text"
             android:textColor="@color/black"
-            android:textSize="@dimen/navigation_left_text"
+            android:textSize="@dimen/left_menu_text"
             app:drawableStartCompat="@drawable/hub_icon" />
 
         <TextView
@@ -90,7 +90,7 @@
             android:gravity="center"
             android:text="@string/left_menu_category_repository_text"
             android:textColor="@color/black"
-            android:textSize="@dimen/navigation_left_text"
+            android:textSize="@dimen/left_menu_text"
             app:drawableStartCompat="@drawable/repository_icon" />
 
         <TextView
@@ -104,7 +104,7 @@
             android:gravity="center"
             android:text="@string/left_menu_category_tags_text"
             android:textColor="@color/black"
-            android:textSize="@dimen/navigation_left_text"
+            android:textSize="@dimen/left_menu_text"
             app:drawableStartCompat="@drawable/tag_icon" />
 
         <TextView
@@ -118,7 +118,7 @@
             android:gravity="center"
             android:text="@string/left_menu_category_bookmarks_text"
             android:textColor="@color/black"
-            android:textSize="@dimen/navigation_left_text"
+            android:textSize="@dimen/left_menu_text"
             app:drawableStartCompat="@drawable/bookmark_icon" />
 
         <TextView
@@ -132,12 +132,12 @@
             android:gravity="center"
             android:text="@string/left_menu_category_basket_text"
             android:textColor="@color/light_red"
-            android:textSize="@dimen/navigation_left_text"
+            android:textSize="@dimen/left_menu_text"
             app:drawableStartCompat="@drawable/basket_icon" />
 
         <ImageView
             android:id="@+id/lm_third_division_rectangle"
-            android:layout_width="@dimen/navigation_rectangle_width"
+            android:layout_width="@dimen/left_menu_rectangle_width"
             android:layout_height="3dp"
             android:layout_gravity="center"
             android:layout_marginTop="24dp"
@@ -157,7 +157,7 @@
             android:gravity="center"
             android:text="@string/left_menu_category_feedback_text"
             android:textColor="@color/light_blue"
-            android:textSize="@dimen/navigation_left_text"
+            android:textSize="@dimen/left_menu_text"
             app:drawableStartCompat="@drawable/feedback_icon" />
 
     </LinearLayout>

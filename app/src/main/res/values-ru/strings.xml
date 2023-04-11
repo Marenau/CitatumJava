@@ -12,7 +12,6 @@
     <string name="left_menu_category_bookmarks_text">Закладки</string>
     <string name="left_menu_category_basket_text">Корзина</string>
     <string name="left_menu_category_feedback_text">Оставить отзыв</string>
-    <string name="left_menu_division_line_description">Разделительная черта</string>
 
     <!-- Элемент нижнего меню -->
     <string name="bn_button">создать</string>
@@ -24,4 +23,20 @@
     <string name="qc_text_hint">Введите текст</string>
     <string name="qc_pn_text_hint">Номер страницы:</string>
     <string name="qс_pn_hint">10</string>
+
+    <!-- Элементы фрагмента репозитория -->
+    <string name="rf_page_text">Репозиторий</string>
+
+    <!-- Элементы фрагмента заголовков -->
+    <string name="ttf_title_text">Название</string>
+    <string name="ttf_author_text">Автор</string>
+
+    <!-- Элементы фрагмента меток -->
+    <string name="tgf_page_name">Метки</string>
+
+    <!-- Элементы фрагмента закладок -->
+    <string name="bmf_page_text">Закладки</string>
+
+    <!-- Элементы фрагмента корзины -->
+    <string name="bf_page_text">Корзина</string>
 </resources>

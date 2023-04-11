@@ -12,7 +12,6 @@
     <string name="left_menu_category_bookmarks_text">Bookmarks</string>
     <string name="left_menu_category_basket_text">Basket</string>
     <string name="left_menu_category_feedback_text">Feedback</string>
-    <string name="left_menu_division_line_description">Division line</string>
 
     <!-- Lower Menu Items -->
     <string name="bn_button">create</string>
@@ -24,4 +23,20 @@
     <string name="qc_text_hint">Start writing</string>
     <string name="qc_pn_text_hint">Page number:</string>
     <string name="qс_pn_hint">10</string>
+
+    <!-- Repository fragment elements -->
+    <string name="rf_page_text">Repository</string>
+
+    <!-- Titles fragment elements -->
+    <string name="ttf_title_text">Title</string>
+    <string name="ttf_author_text">Author</string>
+
+    <!-- Tags fragment elements -->
+    <string name="tgf_page_name">Tags</string>
+
+    <!-- Bookmarks fragment elements -->
+    <string name="bmf_page_text">Bookmarks</string>
+
+    <!-- Basket fragment elements -->
+    <string name="bf_page_text">Basket</string>
 </resources>

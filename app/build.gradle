@@ -6,6 +6,10 @@ android {
     namespace 'com.corylab.citatum'
     compileSdk 33
 
+    buildFeatures {
+        viewBinding true
+    }
+
     defaultConfig {
         applicationId "com.corylab.citatum"
         minSdk 28

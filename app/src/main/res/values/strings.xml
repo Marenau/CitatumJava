@@ -39,4 +39,11 @@
 
     <!-- Basket fragment elements -->
     <string name="bf_page_text">Basket</string>
+
+    <string name="login_text">Login</string>
+    <string name="username_hint_text">Username</string>
+    <string name="password_hint_text">Password</string>
+    <string name="register_text">Register</string>
+    <string name="lf_forgot_text">Forgot?</string>
+    <string name="email_hint_text">Email</string>
 </resources>

@@ -39,4 +39,11 @@
 
     <!-- Элементы фрагмента корзины -->
     <string name="bf_page_text">Корзина</string>
+
+    <string name="login_text">Вход</string>
+    <string name="username_hint_text">Имя пользователя</string>
+    <string name="password_hint_text">Пароль</string>
+    <string name="register_text">Регистрация</string>
+    <string name="lf_forgot_text">Забыли пароль?</string>
+    <string name="email_hint_text">Электронная почта</string>
 </resources>

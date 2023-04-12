@@ -29,7 +29,7 @@
             android:text="@string/left_menu_category_settings_text"
             android:textColor="@color/light_blue"
             android:textSize="@dimen/left_menu_text"
-            app:drawableStartCompat="@drawable/settings_icon" />
+            app:drawableStartCompat="@drawable/icon_settings" />
 
         <ImageView
             android:id="@+id/lm_first_division_rectangle"
@@ -52,7 +52,7 @@
             android:text="@string/left_menu_category_pencil_text"
             android:textColor="@color/black"
             android:textSize="@dimen/left_menu_text"
-            app:drawableStartCompat="@drawable/pencil_icon" />
+            app:drawableStartCompat="@drawable/icon_pencil" />
 
         <ImageView
             android:id="@+id/lm_second_division_rectangle"
@@ -75,7 +75,7 @@
             android:text="@string/left_menu_category_hub_text"
             android:textColor="@color/black"
             android:textSize="@dimen/left_menu_text"
-            app:drawableStartCompat="@drawable/hub_icon" />
+            app:drawableStartCompat="@drawable/icon_hub" />
 
         <TextView
             android:id="@+id/lm_repository_tv"
@@ -89,7 +89,7 @@
             android:text="@string/left_menu_category_repository_text"
             android:textColor="@color/black"
             android:textSize="@dimen/left_menu_text"
-            app:drawableStartCompat="@drawable/repository_icon" />
+            app:drawableStartCompat="@drawable/icon_repository" />
 
         <TextView
             android:id="@+id/lm_tags_tv"
@@ -103,7 +103,7 @@
             android:text="@string/left_menu_category_tags_text"
             android:textColor="@color/black"
             android:textSize="@dimen/left_menu_text"
-            app:drawableStartCompat="@drawable/tag_icon" />
+            app:drawableStartCompat="@drawable/icon_tag" />
 
         <TextView
             android:id="@+id/lm_bookmark_tv"
@@ -117,7 +117,7 @@
             android:text="@string/left_menu_category_bookmarks_text"
             android:textColor="@color/black"
             android:textSize="@dimen/left_menu_text"
-            app:drawableStartCompat="@drawable/bookmark_icon" />
+            app:drawableStartCompat="@drawable/icon_bookmark" />
 
         <TextView
             android:id="@+id/lm_basket_tv"
@@ -131,7 +131,7 @@
             android:text="@string/left_menu_category_basket_text"
             android:textColor="@color/light_red"
             android:textSize="@dimen/left_menu_text"
-            app:drawableStartCompat="@drawable/basket_icon" />
+            app:drawableStartCompat="@drawable/icon_basket" />
 
         <ImageView
             android:id="@+id/lm_third_division_rectangle"
@@ -155,7 +155,7 @@
             android:text="@string/left_menu_category_feedback_text"
             android:textColor="@color/light_blue"
             android:textSize="@dimen/left_menu_text"
-            app:drawableStartCompat="@drawable/feedback_icon" />
+            app:drawableStartCompat="@drawable/icon_feedback" />
 
     </LinearLayout>
 </ScrollView>

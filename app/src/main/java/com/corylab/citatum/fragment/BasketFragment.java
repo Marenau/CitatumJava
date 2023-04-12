@@ -7,6 +7,6 @@ import com.corylab.citatum.R;
 public class BasketFragment extends Fragment {
 
     public BasketFragment() {
-        super(R.layout.basket_fragment);
+        super(R.layout.fragment_basket);
     }
 }

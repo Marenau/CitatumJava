@@ -7,6 +7,6 @@ import com.corylab.citatum.R;
 public class LeftNavigationFragment extends Fragment {
 
     public LeftNavigationFragment() {
-        super(R.layout.left_navigation_menu);
+        super(R.layout.fragment_left_navigation_menu);
     }
 }

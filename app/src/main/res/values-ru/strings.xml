@@ -3,6 +3,14 @@
 
     <string name="default_text">По умолчанию</string>
 
+    <!-- Элементы экранов регистрации и входа -->
+    <string name="login_text">Вход</string>
+    <string name="username_hint">Имя пользователя</string>
+    <string name="password_hint">Пароль</string>
+    <string name="register_text">Регистрация</string>
+    <string name="forgot_text">Забыли пароль?</string>
+    <string name="email_hint">Электронная почта</string>
+
     <!-- Элементы бокового меню -->
     <string name="left_menu_category_settings_text">Настройки</string>
     <string name="left_menu_category_pencil_text">Создать</string>
@@ -15,6 +23,12 @@
 
     <!-- Элемент нижнего меню -->
     <string name="bn_button">создать</string>
+
+    <string name="hf_page_text">CITATUM</string>
+    <string name="hf_day_quote_text">Цитата дня:</string>
+    <string name="hf_quote_cv_edit_text">Дополнить…</string>
+    <string name="hf_repository_text">Репозиторий:</string>
+    <string name="hf_tags_text">Метки:</string>
 
     <!-- Элементы окна создания цитаты -->
     <string name="qc_title_hint">Название</string>
@@ -32,18 +46,11 @@
     <string name="ttf_author_text">Автор</string>
 
     <!-- Элементы фрагмента меток -->
-    <string name="tgf_page_name">Метки</string>
+    <string name="tgf_page_text">Метки</string>
 
     <!-- Элементы фрагмента закладок -->
     <string name="bmf_page_text">Закладки</string>
 
     <!-- Элементы фрагмента корзины -->
     <string name="bf_page_text">Корзина</string>
-
-    <string name="login_text">Вход</string>
-    <string name="username_hint_text">Имя пользователя</string>
-    <string name="password_hint_text">Пароль</string>
-    <string name="register_text">Регистрация</string>
-    <string name="lf_forgot_text">Забыли пароль?</string>
-    <string name="email_hint_text">Электронная почта</string>
 </resources>

@@ -7,6 +7,6 @@ import com.corylab.citatum.R;
 public class SimpleBottomNavigationFragment extends Fragment {
 
     public SimpleBottomNavigationFragment() {
-        super(R.layout.simple_bottom_navigation);
+        super(R.layout.fragment_simple_bottom_navigation);
     }
 }

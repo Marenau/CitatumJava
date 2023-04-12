@@ -16,7 +16,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/menu_icon" />
+        app:srcCompat="@drawable/icon_menu" />
 
     <ImageView
         android:id="@+id/sbn_search_icon"
@@ -26,6 +26,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/search_icon" />
+        app:srcCompat="@drawable/icon_search" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

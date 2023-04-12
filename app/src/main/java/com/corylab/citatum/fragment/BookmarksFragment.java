@@ -7,6 +7,6 @@ import com.corylab.citatum.R;
 public class BookmarksFragment extends Fragment {
 
     public BookmarksFragment() {
-        super(R.layout.bookmarks_fragment);
+        super(R.layout.fragment_bookmarks);
     }
 }

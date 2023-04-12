@@ -4,9 +4,9 @@ import androidx.fragment.app.Fragment;
 
 import com.corylab.citatum.R;
 
-public class TagsFragment extends Fragment {
+public class HubFragment extends Fragment {
 
-    public TagsFragment() {
-        super(R.layout.fragment_tags);
+    public HubFragment() {
+        super(R.layout.fragment_hub);
     }
 }

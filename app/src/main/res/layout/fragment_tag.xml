@@ -6,17 +6,17 @@
     android:background="@color/background_color">
 
     <ImageView
-        android:id="@+id/ttf_return_icon"
+        android:id="@+id/tf_return_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:src="@drawable/return_button"
+        android:src="@drawable/icon_return_bt"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/ttf_red_bookmark"
+        android:id="@+id/tf_red_bookmark"
         android:layout_width="60dp"
         android:layout_height="138dp"
         android:layout_marginEnd="25dp"
@@ -25,7 +25,7 @@
         app:srcCompat="@drawable/home_bookmark" />
 
     <TextView
-        android:id="@+id/ttf_title_text"
+        android:id="@+id/tf_title_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -33,39 +33,14 @@
         android:fontFamily="@font/gothampro_black"
         android:gravity="center"
         android:hyphenationFrequency="normal"
-        android:text="@string/ttf_title_text"
+        android:text="@string/default_text"
         android:textColor="@color/black"
         android:textSize="55sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ttf_return_icon" />
-
-    <ImageView
-        android:id="@+id/ttf_first_division_rectangle"
-        android:layout_width="300dp"
-        android:layout_height="3dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/division_rectangle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ttf_title_text" />
-
-    <TextView
-        android:id="@+id/ttf_author_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/gothampro_medium"
-        android:gravity="center"
-        android:hyphenationFrequency="normal"
-        android:text="@string/ttf_author_text"
-        android:textColor="@color/black"
-        android:textSize="40sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ttf_first_division_rectangle" />
+        app:layout_constraintTop_toBottomOf="@+id/tf_return_icon" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/ttf_recycler_view"
+        android:id="@+id/tf_recycler_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="24dp"
@@ -74,6 +49,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ttf_author_text" />
+        app:layout_constraintTop_toBottomOf="@+id/tf_red_bookmark" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

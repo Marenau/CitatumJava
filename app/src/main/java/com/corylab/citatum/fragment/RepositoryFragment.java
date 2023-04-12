@@ -7,6 +7,6 @@ import com.corylab.citatum.R;
 public class RepositoryFragment extends Fragment {
 
     public RepositoryFragment() {
-        super(R.layout.repository_fragment);
+        super(R.layout.fragment_repository);
     }
 }

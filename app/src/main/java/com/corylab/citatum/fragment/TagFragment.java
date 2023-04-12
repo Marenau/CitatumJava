@@ -7,6 +7,6 @@ import com.corylab.citatum.R;
 public class TagFragment extends Fragment {
 
     public TagFragment() {
-        super(R.layout.tag_fragment);
+        super(R.layout.fragment_tag);
     }
 }

@@ -7,6 +7,6 @@ import com.corylab.citatum.R;
 public class QuoteCreateFragment extends Fragment {
 
     public QuoteCreateFragment() {
-        super(R.layout.quote_create);
+        super(R.layout.fragment_quote_create);
     }
 }

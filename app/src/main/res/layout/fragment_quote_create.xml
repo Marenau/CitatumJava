@@ -29,11 +29,11 @@
                     android:id="@+id/qc_return_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/return_button" />
+                    android:src="@drawable/icon_return_bt" />
 
                 <EditText
                     android:id="@+id/qc_title_et"
-                    android:layout_width="wrap_content"
+                    android:layout_width="300dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="30dp"
                     android:layout_marginTop="10dp"
@@ -54,7 +54,7 @@
 
                 <EditText
                     android:id="@+id/qc_author_et"
-                    android:layout_width="wrap_content"
+                    android:layout_width="300dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="30dp"
                     android:layout_marginTop="10dp"
@@ -153,7 +153,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/qc_red_bookmark"
                 app:layout_constraintStart_toStartOf="@+id/qc_red_bookmark"
                 app:layout_constraintTop_toBottomOf="@+id/qc_red_bookmark"
-                app:srcCompat="@drawable/empty_point_icon" />
+                app:srcCompat="@drawable/empty_point" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

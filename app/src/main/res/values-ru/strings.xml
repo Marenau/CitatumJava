@@ -34,7 +34,7 @@
     <string name="qc_title_hint">Название</string>
     <string name="qc_author_hint">Автор</string>
     <string name="qc_tags_text">Метки:</string>
-    <string name="qc_text_hint">Введите текст</string>
+    <string name="qc_text_hint">Введите текст…</string>
     <string name="qc_pn_text_hint">Номер страницы:</string>
     <string name="qс_pn_hint">10</string>
 
@@ -53,4 +53,8 @@
 
     <!-- Элементы фрагмента корзины -->
     <string name="bf_page_text">Корзина</string>
+
+    <string name="email_address">citatumcorylab@gmail.com</string>
+    <string name="email_subject">Проблема</string>
+    <string name="email_text">У меня возникла проблема с вашим приложением Citatum.</string>
 </resources>

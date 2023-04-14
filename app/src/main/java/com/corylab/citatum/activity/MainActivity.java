@@ -2,6 +2,7 @@ package com.corylab.citatum.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
 import com.corylab.citatum.R;

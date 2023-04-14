@@ -34,7 +34,7 @@
     <string name="qc_title_hint">Title</string>
     <string name="qc_author_hint">Author</string>
     <string name="qc_tags_text">Tags:</string>
-    <string name="qc_text_hint">Start writing</string>
+    <string name="qc_text_hint">Start writing…</string>
     <string name="qc_pn_text_hint">Page number:</string>
     <string name="qс_pn_hint">10</string>
 
@@ -53,4 +53,8 @@
 
     <!-- Basket fragment elements -->
     <string name="bf_page_text">Basket</string>
+
+    <string name="email_address">citatumcorylab@gmail.com</string>
+    <string name="email_subject">Problem</string>
+    <string name="email_text">I have a problem with your Citatum app.</string>
 </resources>

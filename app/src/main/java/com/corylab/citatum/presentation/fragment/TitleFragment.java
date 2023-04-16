@@ -1,4 +1,4 @@
-package com.corylab.citatum.fragment;
+package com.corylab.citatum.presentation.fragment;
 
 import androidx.fragment.app.Fragment;
 

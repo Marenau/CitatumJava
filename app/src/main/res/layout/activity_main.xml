@@ -34,7 +34,7 @@
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/bottom_nav_container_view"
-                android:name="com.corylab.citatum.fragment.BottomNavigationFragment"
+                android:name="com.corylab.citatum.presentation.fragment.BottomNavigationFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -57,7 +57,7 @@
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/ma_left_fcv"
-            android:name="com.corylab.citatum.fragment.LeftNavigationFragment"
+            android:name="com.corylab.citatum.presentation.fragment.LeftNavigationFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:layout="@layout/fragment_left_navigation_menu" />

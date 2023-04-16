@@ -24,6 +24,7 @@
     <!-- Lower Menu Items -->
     <string name="bn_button">create</string>
 
+    <!-- Hub fragment elements -->
     <string name="hf_page_text">CITATUM</string>
     <string name="hf_day_quote_text">Quote of the day:</string>
     <string name="hf_quote_cv_edit_text">Edit…</string>
@@ -54,6 +55,29 @@
     <!-- Basket fragment elements -->
     <string name="bf_page_text">Basket</string>
 
+    <!-- Settings fragment elements -->
+    <string name="sf_page_text">Settings</string>
+    <string name="sf_quit_text">Sing out</string>
+    <string name="sf_date_text">With us from</string>
+
+    <!-- Notification texts -->
+    <string name="no_connection_title_text">Ops!</string>
+    <string name="no_connection_message_text">There is no Internet connection.</string>
+    <string name="no_connection_button_text">Oh…</string>
+    <string name="success_register_title_text">Success.</string>
+    <string name="success_register_message_text">Your account has been created successfully!</string>
+    <string name="success_register_button_text">OK</string>
+    <string name="rejected_register_title_text">Ops!</string>
+    <string name="rejected_register_message_text">An account with this email address already exists.</string>
+    <string name="rejected_register_button_text">Oh</string>
+    <string name="incorrect_register_title_text">Ops!</string>
+    <string name="incorrect_register_message_text">It looks like your data is incorrect. Make sure that you have entered the correct email address; the password contains at least one digit and is at least 8 characters long; all fields are written in Latin.</string>
+    <string name="incorrect_register_button_text">Well…</string>
+    <string name="incorrect_login_title_text">Ops!</string>
+    <string name="incorrect_login_message_text">It looks like your data is incorrect. Make sure that you have entered the correct email address and password.</string>
+    <string name="incorrect_login_button_text">Well…</string>
+
+    <!-- Text for substitution when sending feedback -->
     <string name="email_address">citatumcorylab@gmail.com</string>
     <string name="email_subject">Problem</string>
     <string name="email_text">I have a problem with your Citatum app.</string>

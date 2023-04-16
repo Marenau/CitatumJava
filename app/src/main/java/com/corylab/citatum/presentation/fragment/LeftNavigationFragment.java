@@ -1,4 +1,4 @@
-package com.corylab.citatum.fragment;
+package com.corylab.citatum.presentation.fragment;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,10 +16,8 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.corylab.citatum.R;
-import com.corylab.citatum.activity.MainActivity;
+import com.corylab.citatum.presentation.activity.MainActivity;
 import com.corylab.citatum.databinding.FragmentLeftNavigationMenuBinding;
-
-import java.util.Locale;
 
 public class LeftNavigationFragment extends Fragment {
 
@@ -50,7 +48,9 @@ public class LeftNavigationFragment extends Fragment {
     }
 
     private void init() {
-
+        binding.lmSettingsTv.setOnClickListener(view -> {
+            navigate(R.id.settingsFragment);
+        });
         binding.lmPencilTv.setOnClickListener(view -> {
             navigate(R.id.quoteCreateFragment);
         });

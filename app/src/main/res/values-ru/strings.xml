@@ -24,6 +24,7 @@
     <!-- Элемент нижнего меню -->
     <string name="bn_button">создать</string>
 
+    <!-- Элементы фрагмента главной страницы -->
     <string name="hf_page_text">CITATUM</string>
     <string name="hf_day_quote_text">Цитата дня:</string>
     <string name="hf_quote_cv_edit_text">Дополнить…</string>
@@ -54,6 +55,29 @@
     <!-- Элементы фрагмента корзины -->
     <string name="bf_page_text">Корзина</string>
 
+    <!-- Элементы фрагмента настроек -->
+    <string name="sf_page_text">Настройки</string>
+    <string name="sf_quit_text">Выйти</string>
+    <string name="sf_date_text">С нами с</string>
+
+    <!-- Тексты уведомлений -->
+    <string name="no_connection_title_text">Упс!</string>
+    <string name="no_connection_message_text">Отсутствует интернет-соединение.</string>
+    <string name="no_connection_button_text">Оу…</string>
+    <string name="success_register_title_text">Успешно.</string>
+    <string name="success_register_message_text">Ваша учетная запись была успешно создана!</string>
+    <string name="success_register_button_text">Ок</string>
+    <string name="rejected_register_title_text">Упс!</string>
+    <string name="rejected_register_message_text">Учётная запись с таким адресом электронной почты уже существует.</string>
+    <string name="rejected_register_button_text">Принять бренность бытия</string>
+    <string name="incorrect_register_title_text">Упс!</string>
+    <string name="incorrect_register_message_text">Похоже, ваши данные неверны. Проверьте, что Вы ввели правильный адрес электронной почты; пароль содержит хотя бы одну цифру и имеет длину от 8 символов; во всех полях написано латиницей.</string>
+    <string name="incorrect_register_button_text">Ну ладно…</string>
+    <string name="incorrect_login_title_text">Упс!</string>
+    <string name="incorrect_login_message_text">Похоже, ваши данные неверны. Проверьте, что Вы ввели правильный адрес электронной почты и пароль.</string>
+    <string name="incorrect_login_button_text">Ну ладно…</string>
+
+    <!-- Текст для подстановки при отправки отзыва -->
     <string name="email_address">citatumcorylab@gmail.com</string>
     <string name="email_subject">Проблема</string>
     <string name="email_text">У меня возникла проблема с вашим приложением Citatum.</string>

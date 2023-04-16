@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/hubFragment"
-        android:name="com.corylab.citatum.fragment.HubFragment"
+        android:name="com.corylab.citatum.presentation.fragment.HubFragment"
         android:label="HubFragment"
         tools:layout="@layout/fragment_hub">
         <action
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/repositoryFragment"
-        android:name="com.corylab.citatum.fragment.RepositoryFragment"
+        android:name="com.corylab.citatum.presentation.fragment.RepositoryFragment"
         android:label="RepositoryFragment"
         tools:layout="@layout/fragment_repository">
         <action
@@ -28,19 +28,16 @@
     </fragment>
     <fragment
         android:id="@+id/titleFragment"
-        android:name="com.corylab.citatum.fragment.TitleFragment"
+        android:name="com.corylab.citatum.presentation.fragment.TitleFragment"
         android:label="TitleFragment"
         tools:layout="@layout/fragment_title">
-        <action
-            android:id="@+id/action_titleFragment_to_repositoryFragment"
-            app:destination="@id/repositoryFragment" />
         <action
             android:id="@+id/action_titleFragment_to_quoteCreateFragment"
             app:destination="@id/quoteCreateFragment" />
     </fragment>
     <fragment
         android:id="@+id/quoteCreateFragment"
-        android:name="com.corylab.citatum.fragment.QuoteCreateFragment"
+        android:name="com.corylab.citatum.presentation.fragment.QuoteCreateFragment"
         android:label="QuoteCreateFragment"
         tools:layout="@layout/fragment_quote_create">
         <action
@@ -55,7 +52,7 @@
     </fragment>
     <fragment
         android:id="@+id/tagsFragment"
-        android:name="com.corylab.citatum.fragment.TagsFragment"
+        android:name="com.corylab.citatum.presentation.fragment.TagsFragment"
         android:label="TagsFragment"
         tools:layout="@layout/fragment_tags">
         <action
@@ -64,22 +61,16 @@
     </fragment>
     <fragment
         android:id="@+id/tagFragment"
-        android:name="com.corylab.citatum.fragment.TagFragment"
+        android:name="com.corylab.citatum.presentation.fragment.TagFragment"
         android:label="TagFragment"
         tools:layout="@layout/fragment_tag">
         <action
-            android:id="@+id/action_tagFragment_to_tagsFragment"
-            app:destination="@id/tagsFragment" />
-        <action
             android:id="@+id/action_tagFragment_to_quoteCreateFragment"
             app:destination="@id/quoteCreateFragment" />
-        <action
-            android:id="@+id/action_tagFragment_to_hubFragment"
-            app:destination="@id/hubFragment" />
     </fragment>
     <fragment
         android:id="@+id/bookmarksFragment"
-        android:name="com.corylab.citatum.fragment.BookmarksFragment"
+        android:name="com.corylab.citatum.presentation.fragment.BookmarksFragment"
         android:label="BookmarksFragment"
         tools:layout="@layout/fragment_bookmarks">
         <action
@@ -88,11 +79,16 @@
     </fragment>
     <fragment
         android:id="@+id/basketFragment"
-        android:name="com.corylab.citatum.fragment.BasketFragment"
+        android:name="com.corylab.citatum.presentation.fragment.BasketFragment"
         android:label="BasketFragment"
         tools:layout="@layout/fragment_basket">
         <action
             android:id="@+id/action_basketFragment_to_quoteCreateFragment"
             app:destination="@id/quoteCreateFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.corylab.citatum.presentation.fragment.SettingsFragment"
+        android:label="SettingsFragment"
+        tools:layout="@layout/fragment_settings" />
 </navigation>

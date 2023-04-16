@@ -1,4 +1,4 @@
-package com.corylab.citatum.fragment;
+package com.corylab.citatum.presentation.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -15,7 +15,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.corylab.citatum.R;
-import com.corylab.citatum.activity.MainActivity;
+import com.corylab.citatum.presentation.activity.MainActivity;
 import com.corylab.citatum.databinding.FragmentBottomNavigationBinding;
 
 public class BottomNavigationFragment extends Fragment {

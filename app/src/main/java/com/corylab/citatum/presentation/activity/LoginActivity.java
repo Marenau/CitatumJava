@@ -1,8 +1,9 @@
-package com.corylab.citatum.activity;
+package com.corylab.citatum.presentation.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.os.Bundle;
 
 import com.corylab.citatum.R;

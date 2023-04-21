@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -57,8 +59,11 @@ public class BottomNavigationFragment extends Fragment {
             }
         });
 
+        Animation animation = AnimationUtils.loadAnimation(activity, R.anim.image_scale);
+
         DrawerLayout drawer = activity.findViewById(R.id.ma_drawer);
         binding.bnMenuIcon.setOnClickListener(view -> {
+            binding.bnMenuIcon.startAnimation(animation);
             drawer.openDrawer(GravityCompat.START);
         });
     }

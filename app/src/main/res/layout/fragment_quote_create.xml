@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/qc_main_cl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_color">
@@ -9,12 +10,12 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
         android:layout_marginBottom="20dp"
-        app:cardBackgroundColor="@color/main_color"
-        app:cardCornerRadius="20dp"
+        app:cardBackgroundColor="@color/light_main_color"
+        app:cardCornerRadius="10dp"
         app:cardElevation="0dp"
         tools:layout_editor_absoluteX="10dp"
         tools:layout_editor_absoluteY="10dp">
@@ -23,149 +24,175 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/qc_return_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/icon_return_bt" />
-
-                <EditText
-                    android:id="@+id/qc_title_et"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="70dp"
-                    android:background="@null"
-                    android:fontFamily="@font/gothampro_black"
-                    android:hint="@string/qc_title_hint"
-                    android:scrollHorizontally="true"
-                    android:singleLine="true"
-                    android:textColor="@color/black"
-                    android:textColorHighlight="@color/light_black"
-                    android:textCursorDrawable="@drawable/cursor"
-                    android:textSize="50sp" />
-
-                <ImageView
-                    android:layout_width="250dp"
-                    android:layout_height="5dp"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginTop="10dp"
-                    android:scaleY="1.5"
-                    android:src="@drawable/division_rectangle"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                <EditText
-                    android:id="@+id/qc_author_et"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="70dp"
-                    android:background="@null"
-                    android:fontFamily="@font/gothampro_medium"
-                    android:hint="@string/qc_author_hint"
-                    android:scrollHorizontally="true"
-                    android:singleLine="true"
-                    android:textColor="@color/black"
-                    android:textColorHighlight="@color/light_black"
-                    android:textCursorDrawable="@drawable/cursor"
-                    android:textSize="45sp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="30dp"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/gothampro"
-                        android:text="@string/qc_tags_text"
-                        android:textColor="@color/black"
-                        android:textSize="30sp" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/qc_tags_rv"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp" />
-
-                </LinearLayout>
-
-                <EditText
-                    android:id="@+id/qc_text_et"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:fontFamily="@font/gothampro_light"
-                    android:gravity="clip_vertical"
-                    android:hint="@string/qc_text_hint"
-                    android:inputType="textMultiLine"
-                    android:textColor="@color/black"
-                    android:textColorHighlight="@color/light_black"
-                    android:textCursorDrawable="@drawable/cursor"
-                    android:textSize="30sp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="30dp"
-                        android:fontFamily="@font/gothampro"
-                        android:text="@string/qc_pn_text_hint"
-                        android:textColor="@color/black"
-                        android:textColorHint="@color/black"
-                        android:textSize="30sp" />
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="5dp"
-                        android:background="@null"
-                        android:hint="@string/qс_pn_hint"
-                        android:inputType="number"
-                        android:textColorHighlight="@color/light_black"
-                        android:textCursorDrawable="@drawable/cursor"
-                        android:textSize="30sp" />
-
-                </LinearLayout>
-
-            </LinearLayout>
+            <EditText
+                android:id="@+id/qc_title_et"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="8dp"
+                android:background="@null"
+                android:fontFamily="@font/gothampro_medium"
+                android:hint="@string/qc_title_hint"
+                android:inputType="text"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textColorHighlight="@color/light_black"
+                android:textCursorDrawable="@drawable/cursor"
+                android:textSize="45sp"
+                app:layout_constraintEnd_toStartOf="@+id/qc_basket_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/qc_red_bookmark"
-                android:layout_width="60dp"
-                android:layout_height="138dp"
+                android:id="@+id/qc_first_division_rectangle"
+                android:layout_width="0dp"
+                android:layout_height="5dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:scaleY="1.5"
+                android:src="@drawable/division_rectangle"
+                app:layout_constraintEnd_toEndOf="@+id/qc_title_et"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/qc_title_et" />
+
+            <EditText
+                android:id="@+id/qc_author_et"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:background="@null"
+                android:fontFamily="@font/gothampro"
+                android:hint="@string/qc_author_hint"
+                android:inputType="text"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textColorHighlight="@color/light_black"
+                android:textCursorDrawable="@drawable/cursor"
+                android:textSize="40sp"
+                app:layout_constraintEnd_toEndOf="@+id/qc_title_et"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/qc_first_division_rectangle" />
+
+            <TextView
+                android:id="@+id/qc_tags_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/gothampro_light"
+                android:text="@string/qc_tags_text"
+                android:textColor="@color/black"
+                android:textSize="30sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/qc_author_et" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/qc_tags_rv"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="2dp"
+                app:layout_constraintBottom_toBottomOf="@+id/qc_tags_text"
+                app:layout_constraintEnd_toEndOf="@+id/qc_title_et"
+                app:layout_constraintStart_toEndOf="@+id/qc_tags_text"
+                app:layout_constraintTop_toTopOf="@+id/qc_tags_text" />
+
+            <EditText
+                android:id="@+id/qc_text_et"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:fontFamily="@font/gothampro"
+                android:gravity="clip_vertical"
+                android:hint="@string/qc_text_hint"
+                android:inputType="textMultiLine"
+                android:textColor="@color/black"
+                android:textColorHighlight="@color/light_black"
+                android:textCursorDrawable="@drawable/cursor"
+                android:textSize="25sp"
+                app:layout_constraintBottom_toTopOf="@+id/qc_page_number_text"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/home_bookmark" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/qc_tags_text" />
+
+            <TextView
+                android:id="@+id/qc_page_number_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/gothampro"
+                android:text="@string/qc_pn_text_hint"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
+                android:textSize="25sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <EditText
+                android:id="@+id/qc_page_number_et"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="8dp"
+                android:background="@null"
+                android:fontFamily="@font/gothampro"
+                android:hint="@string/qс_pn_hint"
+                android:inputType="number"
+                android:textColorHighlight="@color/light_black"
+                android:textCursorDrawable="@drawable/cursor"
+                android:textSize="25sp"
+                app:layout_constraintBottom_toBottomOf="@+id/qc_page_number_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/qc_page_number_text"
+                app:layout_constraintTop_toTopOf="@+id/qc_page_number_text" />
+
+            <ImageView
+                android:id="@+id/qc_confirm_icon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintBottom_toBottomOf="@+id/qc_title_et"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/qc_title_et"
+                app:srcCompat="@drawable/icon_confirm" />
+
+            <ImageView
+                android:id="@+id/qc_tag_icon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="15dp"
+                app:layout_constraintEnd_toEndOf="@+id/qc_confirm_icon"
+                app:layout_constraintStart_toStartOf="@+id/qc_confirm_icon"
+                app:layout_constraintTop_toBottomOf="@+id/qc_confirm_icon"
+                app:srcCompat="@drawable/icon_tag_plus" />
 
             <ImageView
                 android:id="@+id/qc_bookmark_icon"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_marginTop="8dp"
-                app:layout_constraintEnd_toEndOf="@+id/qc_red_bookmark"
-                app:layout_constraintStart_toStartOf="@+id/qc_red_bookmark"
-                app:layout_constraintTop_toBottomOf="@+id/qc_red_bookmark"
-                app:srcCompat="@drawable/empty_point" />
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="@+id/qc_tag_icon"
+                app:layout_constraintStart_toStartOf="@+id/qc_tag_icon"
+                app:layout_constraintTop_toBottomOf="@+id/qc_tag_icon"
+                app:srcCompat="@drawable/icon_bookmark" />
+
+            <ImageView
+                android:id="@+id/qc_basket_icon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="15dp"
+                app:layout_constraintEnd_toEndOf="@+id/qc_bookmark_icon"
+                app:layout_constraintStart_toStartOf="@+id/qc_bookmark_icon"
+                app:layout_constraintTop_toBottomOf="@+id/qc_bookmark_icon"
+                app:srcCompat="@drawable/icon_basket" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

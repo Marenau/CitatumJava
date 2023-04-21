@@ -21,34 +21,15 @@
         android:id="@+id/repositoryFragment"
         android:name="com.corylab.citatum.presentation.fragment.RepositoryFragment"
         android:label="RepositoryFragment"
-        tools:layout="@layout/fragment_repository">
-        <action
-            android:id="@+id/action_repositoryFragment_to_titleFragment"
-            app:destination="@id/titleFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/titleFragment"
-        android:name="com.corylab.citatum.presentation.fragment.TitleFragment"
-        android:label="TitleFragment"
-        tools:layout="@layout/fragment_title">
-        <action
-            android:id="@+id/action_titleFragment_to_quoteCreateFragment"
-            app:destination="@id/quoteCreateFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_repository"/>
     <fragment
         android:id="@+id/quoteCreateFragment"
         android:name="com.corylab.citatum.presentation.fragment.QuoteCreateFragment"
         android:label="QuoteCreateFragment"
         tools:layout="@layout/fragment_quote_create">
         <action
-            android:id="@+id/action_quoteCreateFragment_to_titleFragment2"
-            app:destination="@id/titleFragment" />
-        <action
-            android:id="@+id/action_quoteCreateFragment_to_tagFragment"
-            app:destination="@id/tagFragment" />
-        <action
-            android:id="@+id/action_quoteCreateFragment_to_hubFragment"
-            app:destination="@id/hubFragment" />
+            android:id="@+id/action_quoteCreateFragment_to_tagSelectionFragment"
+            app:destination="@id/tagSelectionFragment" />
     </fragment>
     <fragment
         android:id="@+id/tagsFragment"
@@ -58,37 +39,42 @@
         <action
             android:id="@+id/action_tagsFragment_to_tagFragment"
             app:destination="@id/tagFragment" />
+        <action
+            android:id="@+id/action_tagsFragment_to_tagCreateFragment"
+            app:destination="@id/tagCreateFragment" />
     </fragment>
     <fragment
         android:id="@+id/tagFragment"
         android:name="com.corylab.citatum.presentation.fragment.TagFragment"
         android:label="TagFragment"
-        tools:layout="@layout/fragment_tag">
-        <action
-            android:id="@+id/action_tagFragment_to_quoteCreateFragment"
-            app:destination="@id/quoteCreateFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_tag"/>
     <fragment
         android:id="@+id/bookmarksFragment"
         android:name="com.corylab.citatum.presentation.fragment.BookmarksFragment"
         android:label="BookmarksFragment"
-        tools:layout="@layout/fragment_bookmarks">
-        <action
-            android:id="@+id/action_bookmarksFragment_to_quoteCreateFragment"
-            app:destination="@id/quoteCreateFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_bookmarks"/>
     <fragment
         android:id="@+id/basketFragment"
         android:name="com.corylab.citatum.presentation.fragment.BasketFragment"
         android:label="BasketFragment"
-        tools:layout="@layout/fragment_basket">
-        <action
-            android:id="@+id/action_basketFragment_to_quoteCreateFragment"
-            app:destination="@id/quoteCreateFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_basket"/>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.corylab.citatum.presentation.fragment.SettingsFragment"
         android:label="SettingsFragment"
         tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/tagCreateFragment"
+        android:name="com.corylab.citatum.presentation.fragment.TagCreateFragment"
+        android:label="TagCreateFragment"
+        tools:layout="@layout/fragment_tag_create"/>
+    <fragment
+        android:id="@+id/tagSelectionFragment"
+        android:name="com.corylab.citatum.presentation.fragment.TagSelectionFragment"
+        android:label="TagSelectionFragment"
+        tools:layout="@layout/fragment_tag_selection">
+        <action
+            android:id="@+id/action_tagSelectionFragment_to_tagCreateFragment"
+            app:destination="@id/tagCreateFragment" />
+    </fragment>
 </navigation>

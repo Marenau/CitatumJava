@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,7 +20,7 @@ import com.corylab.citatum.R;
 import com.corylab.citatum.presentation.activity.LoginActivity;
 import com.corylab.citatum.presentation.activity.MainActivity;
 import com.corylab.citatum.databinding.FragmentLoginBinding;
-import com.corylab.citatum.enumeration.AccountStatus;
+import com.corylab.citatum.presentation.enumeration.AccountStatus;
 import com.corylab.citatum.presentation.fragment.dialog.ShowNotificationFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -56,6 +58,16 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         init();
+    }
+
+    @Nullable
+    @Override
+    public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
+        if (enter) {
+            return AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_left);
+        } else {
+            return AnimationUtils.loadAnimation(getContext(), R.anim.slide_out_left);
+        }
     }
 
     @Override

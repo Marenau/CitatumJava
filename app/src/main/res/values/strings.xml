@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">Citatum</string>
+    <string name="app_name">Citatum</string>
 
     <string name="default_text">default</string>
 
@@ -34,10 +34,17 @@
     <!-- Elements of the quote creation window -->
     <string name="qc_title_hint">Title</string>
     <string name="qc_author_hint">Author</string>
-    <string name="qc_tags_text">Tags:</string>
     <string name="qc_text_hint">Start writing…</string>
     <string name="qc_pn_text_hint">Page number:</string>
     <string name="qс_pn_hint">10</string>
+    <string name="qc_tags_text">Tags:</string>
+    <string name="qc_autosubstitution_title_text">No title</string>
+    <string name="qc_autosubstitution_author_text">No author</string>
+    <string name="qc_autosubstitution_text_text">Simple text</string>
+    <string name="qc_autosubstitution_page_number_text">0</string>
+    <string name="qc_quotes_added">The quote was successfully added.</string>
+    <string name="qc_quotes_update">The quote was successfully update.</string>
+    <string name="qc_quotes_delete">The quote was successfully delete.</string>
 
     <!-- Repository fragment elements -->
     <string name="rf_page_text">Repository</string>
@@ -59,6 +66,10 @@
     <string name="sf_page_text">Settings</string>
     <string name="sf_quit_text">Sing out</string>
     <string name="sf_date_text">With us from</string>
+
+    <!-- Tag create fragment elements -->
+    <string name="tc_name_hint">Name</string>
+    <string name="tcf_tags_text">You can add a tag to the quote, this will simplify the search in your repository.</string>
 
     <!-- Notification texts -->
     <string name="no_connection_title_text">Ops!</string>

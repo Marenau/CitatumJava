@@ -3,9 +3,12 @@ package com.corylab.citatum.presentation.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -48,28 +51,40 @@ public class LeftNavigationFragment extends Fragment {
     }
 
     private void init() {
+        Animation animation = AnimationUtils.loadAnimation(activity, R.anim.image_scale);
+
         binding.lmSettingsTv.setOnClickListener(view -> {
+            binding.lmSettingsTv.startAnimation(animation);
             navigate(R.id.settingsFragment);
         });
         binding.lmPencilTv.setOnClickListener(view -> {
+            binding.lmPencilTv.startAnimation(animation);
             navigate(R.id.quoteCreateFragment);
         });
         binding.lmHubTv.setOnClickListener(view1 -> {
+            binding.lmHubTv.startAnimation(animation);
             navigate(R.id.hubFragment);
         });
         binding.lmRepositoryTv.setOnClickListener(view2 -> {
+            binding.lmRepositoryTv.startAnimation(animation);
             navigate(R.id.repositoryFragment);
         });
         binding.lmTagsTv.setOnClickListener(view -> {
+            binding.lmTagsTv.startAnimation(animation);
             navigate(R.id.tagsFragment);
         });
         binding.lmBookmarkTv.setOnClickListener(view -> {
+            binding.lmBookmarkTv.startAnimation(animation);
             navigate(R.id.bookmarksFragment);
         });
         binding.lmBasketTv.setOnClickListener(view -> {
+            binding.lmBasketTv.startAnimation(animation);
             navigate(R.id.basketFragment);
         });
         binding.lmFeedbackTv.setOnClickListener(view -> {
+            binding.lmFeedbackTv.startAnimation(animation);
+            DrawerLayout drawer = activity.findViewById(R.id.ma_drawer);
+            drawer.closeDrawer(GravityCompat.START);
             Intent emailIntent = new Intent(Intent.ACTION_SEND);
             emailIntent.setType("plain/text");
             emailIntent.putExtra(Intent.EXTRA_EMAIL, getString(R.string.email_address));
@@ -83,12 +98,12 @@ public class LeftNavigationFragment extends Fragment {
 
     private void navigate(int id) {
         View mainContainer = activity.findViewById(R.id.nav_container_view);
-        DrawerLayout drawer = activity.findViewById(R.id.ma_drawer);
         NavController navController = Navigation.findNavController(mainContainer);
         int currentDestination = navController.getCurrentDestination().getId();
         if (currentDestination != id) {
             navController.navigate(id);
         }
+        DrawerLayout drawer = activity.findViewById(R.id.ma_drawer);
         drawer.closeDrawer(GravityCompat.START);
     }
 }

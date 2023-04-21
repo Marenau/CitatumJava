@@ -34,10 +34,17 @@
     <!-- Элементы окна создания цитаты -->
     <string name="qc_title_hint">Название</string>
     <string name="qc_author_hint">Автор</string>
-    <string name="qc_tags_text">Метки:</string>
     <string name="qc_text_hint">Введите текст…</string>
     <string name="qc_pn_text_hint">Номер страницы:</string>
     <string name="qс_pn_hint">10</string>
+    <string name="qc_tags_text">Метки:</string>
+    <string name="qc_autosubstitution_title_text">Без заголовка</string>
+    <string name="qc_autosubstitution_author_text">Без автора</string>
+    <string name="qc_autosubstitution_text_text">Обычный текст.</string>
+    <string name="qc_autosubstitution_page_number_text">0</string>
+    <string name="qc_quotes_added">Цитата была успешно добавлена.</string>
+    <string name="qc_quotes_update">Цитата была успешно обновлена.</string>
+    <string name="qc_quotes_delete">Цитата была успешно удалена.</string>
 
     <!-- Элементы фрагмента репозитория -->
     <string name="rf_page_text">Репозиторий</string>
@@ -59,6 +66,10 @@
     <string name="sf_page_text">Настройки</string>
     <string name="sf_quit_text">Выйти</string>
     <string name="sf_date_text">С нами с</string>
+
+    <!-- Элементы фрагмента создания метки -->
+    <string name="tc_name_hint">Название</string>
+    <string name="tcf_tags_text">Вы можете добавить метку к цитате, это упростит поиск по вашему репозиторию.</string>
 
     <!-- Тексты уведомлений -->
     <string name="no_connection_title_text">Упс!</string>

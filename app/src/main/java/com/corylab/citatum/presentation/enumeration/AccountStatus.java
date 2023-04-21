@@ -1,4 +1,4 @@
-package com.corylab.citatum.enumeration;
+package com.corylab.citatum.presentation.enumeration;
 
 public enum AccountStatus {
     UNCONNECTED,

@@ -1,29 +1,41 @@
 package com.corylab.citatum.presentation.adapter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.corylab.citatum.R;
+import com.corylab.citatum.data.model.Quote;
 import com.corylab.citatum.data.model.Tag;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TagAdapter extends RecyclerView.Adapter<TagAdapter.TagViewHolder> {
+public class TagAdapter extends ListAdapter<Tag, TagAdapter.TagViewHolder> {
 
-    private Context context;
-    private List<Tag> tags;
+    private static final DiffUtil.ItemCallback<Tag> DIFF_CALLBACK = new DiffUtil.ItemCallback<Tag>() {
+        @Override
+        public boolean areItemsTheSame(@NonNull Tag oldItem, @NonNull Tag newItem) {
+            return oldItem.getUid() == newItem.getUid();
+        }
 
-    public TagAdapter(Context context) {
-        this.context = context;
-        tags = new ArrayList<>();
+        @Override
+        public boolean areContentsTheSame(@NonNull Tag oldItem, @NonNull Tag newItem) {
+            return oldItem.equals(newItem);
+        }
+    };
+
+    public TagAdapter() {
+        super(DIFF_CALLBACK);
     }
 
     public final static class TagViewHolder extends RecyclerView.ViewHolder {
@@ -39,25 +51,22 @@ public class TagAdapter extends RecyclerView.Adapter<TagAdapter.TagViewHolder> {
     @NonNull
     @Override
     public TagViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View tagsItems = LayoutInflater.from(context).inflate(R.layout.tag_item, parent, false);
+        View tagsItems = LayoutInflater.from(parent.getContext()).inflate(R.layout.tag_item, parent, false);
         return new TagViewHolder(tagsItems);
     }
 
     @Override
     public void onBindViewHolder(@NonNull TagViewHolder holder, int position) {
-        Tag tag = tags.get(position);
+        Tag tag = getItem(position);
         holder.tagName.setText(tag.getName());
+        holder.itemView.setOnClickListener(view -> {
+            Bundle transfer = new Bundle();
+            transfer.putInt( "uid", tag.getUid());
+            Navigation.findNavController(view).navigate(R.id.action_tagsFragment_to_tagFragment, transfer);
+        });
     }
 
-    @Override
-    public int getItemCount() {
-        return tags.size();
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    public void updateList(List<Tag> tags) {
-        this.tags.clear();
-        this.tags = tags;
-        notifyDataSetChanged();
+    public Tag getTagAtPosition(int position) {
+        return getItem(position);
     }
 }

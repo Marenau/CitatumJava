@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.corylab.citatum.data.entity.EntityQuote;
+import com.corylab.citatum.data.entity.QuoteTagJoin;
 import com.corylab.citatum.data.model.Quote;
 import com.corylab.citatum.data.repository.Repository;
 
@@ -26,31 +27,34 @@ public class QuoteViewModel extends AndroidViewModel {
     }
 
     public void insert(Quote quote) {
-        repository.insertQuote(toEntity(quote));
+        repository.insertQuote(quote);
     }
 
     public void delete(Quote quote) {
-        EntityQuote temp = toEntity(quote);
-        temp.uid = quote.getUid();
-        temp.bookmarkFlag = quote.getBookmarkFlag();
-        repository.deleteQuote(temp);
+        repository.deleteQuote(quote);
     }
 
     public void update(Quote quote) {
-        EntityQuote temp = toEntity(quote);
-        temp.uid = quote.getUid();
-        repository.updateQuote(temp);
+        repository.updateQuote(quote);
     }
 
     public int getMaxId() {
-        return repository.getMaxId();
+        return repository.getQuoteMaxId();
     }
 
     public Quote getQuoteByUid(int uid) {
-        return repository.getQuoteByUid(uid).toQuote();
+        return repository.getQuoteByUid(uid);
     }
 
-    private EntityQuote toEntity(Quote quote) {
-        return new EntityQuote(quote.getTitle(), quote.getAuthor(), quote.getText(), quote.getDate(), quote.getPageNumber(), quote.getBookmarkFlag());
+    public LiveData<List<Quote>> getBookmarkedQuotes() {
+       return repository.getBookmarkedQuotes();
+    }
+
+    public LiveData<List<Quote>> getRemovedQuotes() {
+        return repository.getRemovedQuotes();
+    }
+
+    public LiveData<List<Quote>> getAllActive() {
+        return repository.getAllActive();
     }
 }

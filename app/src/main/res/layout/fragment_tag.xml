@@ -30,7 +30,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/tf_recycler_view"
+        android:id="@+id/tf_rv"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="24dp"

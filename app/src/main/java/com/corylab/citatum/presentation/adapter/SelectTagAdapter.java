@@ -1,14 +1,13 @@
 package com.corylab.citatum.presentation.adapter;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.corylab.citatum.R;
@@ -17,14 +16,24 @@ import com.corylab.citatum.data.model.Tag;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SelectTagAdapter extends RecyclerView.Adapter<SelectTagAdapter.SelectTagViewHolder> {
+public class SelectTagAdapter extends ListAdapter<Tag, SelectTagAdapter.SelectTagViewHolder> {
 
-    private Context context;
-    private List<Tag> tags;
+    private List<Tag> chosenList = new ArrayList<>();
 
-    public SelectTagAdapter(Context context) {
-        this.context = context;
-        tags = new ArrayList<>();
+    private static final DiffUtil.ItemCallback<Tag> DIFF_CALLBACK = new DiffUtil.ItemCallback<Tag>() {
+        @Override
+        public boolean areItemsTheSame(@NonNull Tag oldItem, @NonNull Tag newItem) {
+            return oldItem.getUid() == newItem.getUid();
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull Tag oldItem, @NonNull Tag newItem) {
+            return oldItem.equals(newItem);
+        }
+    };
+
+    public SelectTagAdapter() {
+        super(DIFF_CALLBACK);
     }
 
     public final static class SelectTagViewHolder extends RecyclerView.ViewHolder {
@@ -40,25 +49,31 @@ public class SelectTagAdapter extends RecyclerView.Adapter<SelectTagAdapter.Sele
     @NonNull
     @Override
     public SelectTagViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View tagsItems = LayoutInflater.from(context).inflate(R.layout.select_tag_item, parent, false);
+        View tagsItems = LayoutInflater.from(parent.getContext()).inflate(R.layout.select_tag_item, parent, false);
         return new SelectTagViewHolder(tagsItems);
     }
 
     @Override
     public void onBindViewHolder(@NonNull SelectTagViewHolder holder, int position) {
-        Tag tag = tags.get(position);
+        Tag tag = getItem(position);
         holder.checkBox.setText(tag.getName());
+        holder.checkBox.setOnCheckedChangeListener((compoundButton, b) -> {
+            Tag temp = getItem(holder.getAdapterPosition());
+            if (b)
+                chosenList.add(temp);
+            else
+                chosenList.remove(temp);
+        });
     }
 
-    @Override
-    public int getItemCount() {
-        return tags.size();
+    public List<Tag> getChosenList() {
+        return chosenList;
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    public void updateList(List<Tag> tags) {
-        this.tags.clear();
-        this.tags = tags;
-        notifyDataSetChanged();
+    public List<Tag> getUnchosenList() {
+        List<Tag> temp = new ArrayList<>();
+        temp.addAll(getCurrentList());
+        temp.removeAll(chosenList);
+        return temp;
     }
 }

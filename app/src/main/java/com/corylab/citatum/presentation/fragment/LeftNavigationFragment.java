@@ -97,12 +97,11 @@ public class LeftNavigationFragment extends Fragment {
     }
 
     private void navigate(int id) {
-        View mainContainer = activity.findViewById(R.id.nav_container_view);
-        NavController navController = Navigation.findNavController(mainContainer);
+        View navigationContainerView = activity.findViewById(R.id.nav_container_view);
+        NavController navController = Navigation.findNavController(navigationContainerView);
         int currentDestination = navController.getCurrentDestination().getId();
-        if (currentDestination != id) {
+        if (currentDestination != id)
             navController.navigate(id);
-        }
         DrawerLayout drawer = activity.findViewById(R.id.ma_drawer);
         drawer.closeDrawer(GravityCompat.START);
     }

@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.corylab.citatum.data.entity.EntityTag;
+import com.corylab.citatum.data.model.Quote;
 import com.corylab.citatum.data.model.Tag;
 import com.corylab.citatum.data.repository.Repository;
 
@@ -26,22 +27,22 @@ public class TagViewModel extends AndroidViewModel {
     }
 
     public void insert(Tag tag) {
-        repository.insertTag(toEntity(tag));
+        repository.insertTag(tag);
     }
 
     public void delete(Tag tag) {
-        EntityTag temp = toEntity(tag);
-        temp.uid = tag.getUid();
-        repository.deleteTag(temp);
+        repository.deleteTag(tag);
     }
 
     public void update(Tag tag) {
-        EntityTag temp = toEntity(tag);
-        temp.uid = tag.getUid();
-        repository.updateTag(temp);
+        repository.updateTag(tag);
     }
 
-    private EntityTag toEntity(Tag tag) {
-        return new EntityTag(tag.getName());
+    public Tag getTagById(int id) {
+        return repository.getTagById(id);
+    }
+
+    public LiveData<List<Tag>> getTagsForQuote(int id) {
+        return repository.getTagsForQuote(id);
     }
 }

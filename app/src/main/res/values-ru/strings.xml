@@ -44,7 +44,8 @@
     <string name="qc_autosubstitution_page_number_text">0</string>
     <string name="qc_quotes_added">Цитата была успешно добавлена.</string>
     <string name="qc_quotes_update">Цитата была успешно обновлена.</string>
-    <string name="qc_quotes_delete">Цитата была успешно удалена.</string>
+    <string name="qc_quotes_remove">Цитата была помещена в корзину.</string>
+    <string name="qc_add_quote_request">Сохраните цитату для внесения изменений.</string>
 
     <!-- Элементы фрагмента репозитория -->
     <string name="rf_page_text">Репозиторий</string>
@@ -69,7 +70,9 @@
 
     <!-- Элементы фрагмента создания метки -->
     <string name="tc_name_hint">Название</string>
-    <string name="tcf_tags_text">Вы можете добавить метку к цитате, это упростит поиск по вашему репозиторию.</string>
+    <string name="tc_tags_text">Вы можете добавить метку к цитате, это упростит поиск по вашему репозиторию.</string>
+    <string name="tc_tag_added">Метка была успешно добавлена.</string>
+    <string name="tc_tag_update">Метка была успешно обновлена.</string>
 
     <!-- Тексты уведомлений -->
     <string name="no_connection_title_text">Упс!</string>
@@ -87,6 +90,12 @@
     <string name="incorrect_login_title_text">Упс!</string>
     <string name="incorrect_login_message_text">Похоже, ваши данные неверны. Проверьте, что Вы ввели правильный адрес электронной почты и пароль.</string>
     <string name="incorrect_login_button_text">Ну ладно…</string>
+
+    <string name="sus_undo_text">Отмена</string>
+    <string name="sus_text">Метка</string>
+    <string name="sus_delete_text">была удалена.</string>
+    <string name="sus_quote_remove_text">Цитата была помещена в корзину.</string>
+    <string name="sus_quote_delete_text">Цитата была удалена.</string>
 
     <!-- Текст для подстановки при отправки отзыва -->
     <string name="email_address">citatumcorylab@gmail.com</string>

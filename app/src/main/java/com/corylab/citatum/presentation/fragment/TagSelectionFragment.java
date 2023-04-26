@@ -2,6 +2,7 @@ package com.corylab.citatum.presentation.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,19 +14,27 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.corylab.citatum.R;
+import com.corylab.citatum.data.entity.QuoteTagJoin;
+import com.corylab.citatum.data.model.Tag;
 import com.corylab.citatum.databinding.FragmentTagSelectionBinding;
 import com.corylab.citatum.presentation.activity.MainActivity;
+import com.corylab.citatum.presentation.adapter.QuoteTagAdapter;
 import com.corylab.citatum.presentation.adapter.SelectTagAdapter;
+import com.corylab.citatum.presentation.viewmodel.QuoteTagJoinViewModel;
 import com.corylab.citatum.presentation.viewmodel.TagViewModel;
+
+import java.util.List;
 
 public class TagSelectionFragment extends Fragment {
 
     private FragmentTagSelectionBinding binding;
     private MainActivity activity;
+    private QuoteTagJoinViewModel quoteTagJoinViewModel;
     private TagViewModel tagViewModel;
 
     public TagSelectionFragment() {
@@ -41,6 +50,7 @@ public class TagSelectionFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        quoteTagJoinViewModel = new ViewModelProvider(this).get(QuoteTagJoinViewModel.class);
         tagViewModel = new ViewModelProvider(this).get(TagViewModel.class);
     }
 
@@ -68,19 +78,37 @@ public class TagSelectionFragment extends Fragment {
     }
 
     private void init() {
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
+        final int[] uid = {-1};
+        Bundle trBundle = getArguments();
+        uid[0] = trBundle.getInt("uid");
+        Log.i("ID", String.valueOf(uid[0]));
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(activity, RecyclerView.VERTICAL, false);
         binding.stfChbRv.setLayoutManager(layoutManager);
-        SelectTagAdapter tagAdapter = new SelectTagAdapter(getContext());
+        SelectTagAdapter tagAdapter = new SelectTagAdapter();
         binding.stfChbRv.setAdapter(tagAdapter);
-        tagViewModel.getTags().observe(getViewLifecycleOwner(), tags -> tagAdapter.updateList(tags));
+        tagViewModel.getTags().observe(getViewLifecycleOwner(), tags -> tagAdapter.submitList(tags));
+
+        RecyclerView.LayoutManager layoutManager2 = new LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false);
+        binding.stfCurrentTagsRv.setLayoutManager(layoutManager2);
+        QuoteTagAdapter tagAdapter2 = new QuoteTagAdapter();
+        binding.stfCurrentTagsRv.setAdapter(tagAdapter2);
+        quoteTagJoinViewModel.getTagsForQuote(uid[0]).observe(getViewLifecycleOwner(), tags -> tagAdapter2.submitList(tags));
+
+        binding.stfConfirmIcon.setOnClickListener(view -> {
+            List<Tag> chosenList = tagAdapter.getChosenList();
+            for (Tag t : chosenList)
+                quoteTagJoinViewModel.insert(new QuoteTagJoin(uid[0], t.getUid()));
+            List<Tag> unchosenList = tagAdapter.getUnchosenList();
+            for (Tag t : unchosenList)
+                quoteTagJoinViewModel.delete(new QuoteTagJoin(uid[0], t.getUid()));
+            Navigation.findNavController(view).navigateUp();
+        });
 
         Animation animation = AnimationUtils.loadAnimation(activity, R.anim.image_scale);
-        binding.stfTagIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                binding.stfTagIcon.startAnimation(animation);
-                Navigation.findNavController(view).navigate(R.id.action_tagSelectionFragment_to_tagCreateFragment);
-            }
+        binding.stfTagIcon.setOnClickListener(view -> {
+            binding.stfTagIcon.startAnimation(animation);
+            Navigation.findNavController(view).navigate(R.id.action_tagSelectionFragment_to_tagCreateFragment);
         });
     }
 }

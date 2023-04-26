@@ -49,9 +49,9 @@ public class BottomNavigationFragment extends Fragment {
     }
 
     private void init() {
-        View mainContainer = activity.findViewById(R.id.nav_container_view);
+        View navigationContainerView = activity.findViewById(R.id.nav_container_view);
         binding.bnButton.setOnClickListener(view -> {
-            NavController navController = Navigation.findNavController(mainContainer);
+            NavController navController = Navigation.findNavController(navigationContainerView);
             int currentDestination = navController.getCurrentDestination().getId();
             int destination = R.id.quoteCreateFragment;
             if (currentDestination != destination) {

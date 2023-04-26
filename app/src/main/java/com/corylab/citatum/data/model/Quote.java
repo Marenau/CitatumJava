@@ -1,5 +1,7 @@
 package com.corylab.citatum.data.model;
 
+import java.util.Objects;
+
 public class Quote {
     private int uid;
     private String title;
@@ -8,8 +10,9 @@ public class Quote {
     private String date;
     private String pageNumber;
     private int bookmarkFlag;
+    private int removedFlag;
 
-    public Quote(int uid, String title, String author, String text, String date, String pageNumber, int bookmarkFlag) {
+    public Quote(int uid, String title, String author, String text, String date, String pageNumber, int bookmarkFlag, int removedFlag) {
         this.uid = uid;
         this.title = title;
         this.author = author;
@@ -17,6 +20,7 @@ public class Quote {
         this.date = date;
         this.pageNumber = pageNumber;
         this.bookmarkFlag = bookmarkFlag;
+        this.removedFlag = removedFlag;
     }
 
     public Quote(String title, String author, String text, String date, String pageNumber) {
@@ -28,6 +32,34 @@ public class Quote {
     }
 
     public Quote() {
+        uid = -1;
+        bookmarkFlag = 0;
+        removedFlag = 0;
+    }
+
+    public Quote(Quote quote) {
+        this.uid = quote.uid;
+        this.title = quote.title;
+        this.author = quote.author;
+        this.text = quote.text;
+        this.date = quote.date;
+        this.pageNumber = quote.pageNumber;
+        this.bookmarkFlag = quote.bookmarkFlag;
+        this.removedFlag = quote.removedFlag;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {return true;}
+        if (!(obj instanceof Quote)) {return false;}
+        Quote other = (Quote) obj;
+        return Objects.equals(title, other.title) &&
+                Objects.equals(author, other.author) &&
+                Objects.equals(text, other.text) &&
+                Objects.equals(date, other.date) &&
+                Objects.equals(pageNumber, other.pageNumber) &&
+                bookmarkFlag == other.bookmarkFlag &&
+                removedFlag == other.removedFlag;
     }
 
     public int getUid() {
@@ -84,5 +116,13 @@ public class Quote {
 
     public void setBookmarkFlag(int bookmarkFlag) {
         this.bookmarkFlag = bookmarkFlag;
+    }
+
+    public int getRemovedFlag() {
+        return removedFlag;
+    }
+
+    public void setRemovedFlag(int removedFlag) {
+        this.removedFlag = removedFlag;
     }
 }

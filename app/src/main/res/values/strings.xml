@@ -44,7 +44,8 @@
     <string name="qc_autosubstitution_page_number_text">0</string>
     <string name="qc_quotes_added">The quote was successfully added.</string>
     <string name="qc_quotes_update">The quote was successfully update.</string>
-    <string name="qc_quotes_delete">The quote was successfully delete.</string>
+    <string name="qc_quotes_remove">The quote was placed in the basket.</string>
+    <string name="qc_add_quote_request">Save the quote for making changes.</string>
 
     <!-- Repository fragment elements -->
     <string name="rf_page_text">Repository</string>
@@ -69,7 +70,9 @@
 
     <!-- Tag create fragment elements -->
     <string name="tc_name_hint">Name</string>
-    <string name="tcf_tags_text">You can add a tag to the quote, this will simplify the search in your repository.</string>
+    <string name="tc_tags_text">You can add a tag to the quote, this will simplify the search in your repository.</string>
+    <string name="tc_tag_added">The tag was successfully added.</string>
+    <string name="tc_tag_update">The tag was successfully update.</string>
 
     <!-- Notification texts -->
     <string name="no_connection_title_text">Ops!</string>
@@ -87,6 +90,12 @@
     <string name="incorrect_login_title_text">Ops!</string>
     <string name="incorrect_login_message_text">It looks like your data is incorrect. Make sure that you have entered the correct email address and password.</string>
     <string name="incorrect_login_button_text">Well…</string>
+
+    <string name="sus_undo_text">Undo</string>
+    <string name="sus_text">Tag</string>
+    <string name="sus_delete_text">was delete.</string>
+    <string name="sus_quote_remove_text">The quote was placed in the basket.</string>
+    <string name="sus_quote_delete_text">The quote was deleted.</string>
 
     <!-- Text for substitution when sending feedback -->
     <string name="email_address">citatumcorylab@gmail.com</string>

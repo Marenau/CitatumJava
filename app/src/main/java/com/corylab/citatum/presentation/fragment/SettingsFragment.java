@@ -3,7 +3,6 @@ package com.corylab.citatum.presentation.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,18 +12,15 @@ import android.view.animation.AnimationUtils;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.corylab.citatum.R;
 import com.corylab.citatum.databinding.FragmentSettingsBinding;
 import com.corylab.citatum.presentation.activity.LoginActivity;
 import com.corylab.citatum.presentation.activity.MainActivity;
+import com.corylab.citatum.presentation.viewmodel.SharedPreferencesViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -34,6 +30,7 @@ public class SettingsFragment extends Fragment {
     private FragmentSettingsBinding binding;
     private MainActivity activity;
     private FirebaseAuth auth;
+    private SharedPreferencesViewModel sharedPreferencesViewModel;
 
     public SettingsFragment() {
         super(R.layout.fragment_settings);
@@ -45,10 +42,21 @@ public class SettingsFragment extends Fragment {
         super.onAttach(context);
     }
 
+    @Nullable
+    @Override
+    public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
+        if (enter) {
+            return AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_left);
+        } else {
+            return AnimationUtils.loadAnimation(getContext(), R.anim.slide_out_left);
+        }
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         auth = FirebaseAuth.getInstance();
+        sharedPreferencesViewModel = new ViewModelProvider(this).get(SharedPreferencesViewModel.class);
     }
 
     @Nullable
@@ -64,37 +72,13 @@ public class SettingsFragment extends Fragment {
         init();
     }
 
-    @Nullable
-    @Override
-    public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
-        if (enter) {
-            return AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_left);
-        } else {
-            return AnimationUtils.loadAnimation(getContext(), R.anim.slide_out_left);
-        }
-    }
-
     private void init() {
+        binding.sfUsernameText.setText(sharedPreferencesViewModel.getString("username", "Oops!"));
         FirebaseUser user = auth.getCurrentUser();
+        binding.sfEmailText.setText(user.getEmail());
         long creationDate = user.getMetadata().getCreationTimestamp();
         String formattedDate = new SimpleDateFormat("MM/yyyy").format(new Date(creationDate));
         binding.sfDateText.setText(getString(R.string.sf_date_text) + " " + formattedDate);
-        binding.sfEmailText.setText(user.getEmail());
-
-        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");
-        String userId = user.getUid();
-        usersRef.child(userId).child("username").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String username = dataSnapshot.getValue(String.class);
-                binding.sfUsernameText.setText(username);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.d("Firebase Error", "onCancelled: " + databaseError.getMessage());
-            }
-        });
 
         binding.sfQuitBtn.setOnClickListener(view -> {
             auth.signOut();

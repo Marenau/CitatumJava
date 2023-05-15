@@ -17,23 +17,26 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Database(entities = {EntityQuote.class, EntityTag.class, QuoteTagJoin.class}, version = 1)
-public abstract class QuoteRoomDatabase extends RoomDatabase {
+public abstract class AppRoomDatabase extends RoomDatabase {
 
     public abstract QuoteDao quoteDao();
+
     public abstract TagDao tagDao();
+
     public abstract QuoteTagJoinDao quoteTagJoinDao();
 
-    private static volatile QuoteRoomDatabase INSTANCE;
+    private static volatile AppRoomDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;
     public static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
     public static final ExecutorService databaseReadExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
-    public static QuoteRoomDatabase getDatabase(final Context context) {
+    public static AppRoomDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
-            synchronized (QuoteRoomDatabase.class) {
+            synchronized (AppRoomDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            QuoteRoomDatabase.class, "quote_database").build();
+                                    AppRoomDatabase.class, "quote_database")
+                            .build();
                 }
             }
         }

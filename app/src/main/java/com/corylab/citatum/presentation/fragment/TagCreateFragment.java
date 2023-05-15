@@ -41,6 +41,16 @@ public class TagCreateFragment extends Fragment {
         super.onAttach(context);
     }
 
+    @Nullable
+    @Override
+    public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
+        if (enter) {
+            return AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_left);
+        } else {
+            return AnimationUtils.loadAnimation(getContext(), R.anim.slide_out_left);
+        }
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,16 +68,6 @@ public class TagCreateFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         init();
-    }
-
-    @Nullable
-    @Override
-    public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
-        if (enter) {
-            return AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_left);
-        } else {
-            return AnimationUtils.loadAnimation(getContext(), R.anim.slide_out_left);
-        }
     }
 
     private void init() {
@@ -89,7 +89,7 @@ public class TagCreateFragment extends Fragment {
         Animation animation = AnimationUtils.loadAnimation(activity, R.anim.image_scale);
 
         binding.tcfConfirmIcon.setOnClickListener(view -> {
-            binding.tcfConfirmIcon.startAnimation(animation);
+            view.startAnimation(animation);
             if (uid[0] == -1) {
                 tagViewModel.insert(new Tag(binding.tcfNameEt.getText().toString()));
                 Navigation.findNavController(view).navigateUp();

@@ -8,17 +8,17 @@ import androidx.lifecycle.LiveData;
 import com.corylab.citatum.data.entity.QuoteTagJoin;
 import com.corylab.citatum.data.model.Quote;
 import com.corylab.citatum.data.model.Tag;
-import com.corylab.citatum.data.repository.Repository;
+import com.corylab.citatum.data.repository.QuoteTagJoinRepository;
 
 import java.util.List;
 
-
 public class QuoteTagJoinViewModel extends AndroidViewModel {
-    private Repository repository;
+
+    private QuoteTagJoinRepository repository;
 
     public QuoteTagJoinViewModel(Application application) {
         super(application);
-        repository = new Repository(application);
+        repository = new QuoteTagJoinRepository(application);
     }
 
     public void insert(QuoteTagJoin quoteTagJoin) {
@@ -33,7 +33,7 @@ public class QuoteTagJoinViewModel extends AndroidViewModel {
         return repository.getTagsForQuote(id);
     }
 
-    public  LiveData<List<Quote>> getQuotesForTag(int id) {
+    public LiveData<List<Quote>> getQuotesForTag(int id) {
         return repository.getQuotesForTag(id);
     }
 }

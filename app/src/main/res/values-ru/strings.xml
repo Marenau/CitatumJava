@@ -26,7 +26,12 @@
 
     <!-- Элементы фрагмента главной страницы -->
     <string name="hf_page_text">CITATUM</string>
+    <string name="hf_welcome_morning_text">Доброе утро!</string>
+    <string name="hf_welcome_day_text">Добрый день!</string>
+    <string name="hf_welcome_evening_text">Добрый вечер!</string>
+    <string name="hf_welcome_night_text">Доброй ночи!</string>
     <string name="hf_day_quote_text">Цитата дня:</string>
+    <string name="hf_day_base_quote">Сейчас или никогда!</string>
     <string name="hf_quote_cv_edit_text">Дополнить…</string>
     <string name="hf_repository_text">Репозиторий:</string>
     <string name="hf_tags_text">Метки:</string>
@@ -46,6 +51,8 @@
     <string name="qc_quotes_update">Цитата была успешно обновлена.</string>
     <string name="qc_quotes_remove">Цитата была помещена в корзину.</string>
     <string name="qc_add_quote_request">Сохраните цитату для внесения изменений.</string>
+    <string name="qc_quote_bookmark_enable">Цитата была успешно добавлена в закладки.</string>
+    <string name="qc_quote_bookmark_disable">Цитата была успешно убрана из закладок.</string>
 
     <!-- Элементы фрагмента репозитория -->
     <string name="rf_page_text">Репозиторий</string>
@@ -62,6 +69,7 @@
 
     <!-- Элементы фрагмента корзины -->
     <string name="bf_page_text">Корзина</string>
+    <string name="bf_quotes_deleting_text">Цитаты автоматически удаляются после 30 дней со дня их помещения в корзину.</string>
 
     <!-- Элементы фрагмента настроек -->
     <string name="sf_page_text">Настройки</string>
@@ -90,7 +98,14 @@
     <string name="incorrect_login_title_text">Упс!</string>
     <string name="incorrect_login_message_text">Похоже, ваши данные неверны. Проверьте, что Вы ввели правильный адрес электронной почты и пароль.</string>
     <string name="incorrect_login_button_text">Ну ладно…</string>
+    <string name="forgot_password_title_text">Внимание</string>
+    <string name="forgot_password_message_text">Введите свой адрес электронной почты в поле на экране входа, затем повторно нажмите на кнопку "забыли пароль".</string>
+    <string name="forgot_password_button_text">Ок</string>
+    <string name="forgot_password_sent_title_text">Типтоп</string>
+    <string name="forgot_password_sent_message_text">Сообщение было отправло на вашу почту. Перейдите по ссылке, указанной в письме.</string>
+    <string name="forgot_password_sent_button_text">Ок</string>
 
+    <!-- Текст уведомлений при удалении -->
     <string name="sus_undo_text">Отмена</string>
     <string name="sus_text">Метка</string>
     <string name="sus_delete_text">была удалена.</string>

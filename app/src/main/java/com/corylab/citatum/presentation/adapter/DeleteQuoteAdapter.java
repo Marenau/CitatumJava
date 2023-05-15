@@ -1,23 +1,28 @@
 package com.corylab.citatum.presentation.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.corylab.citatum.R;
 import com.corylab.citatum.data.model.Quote;
+import com.corylab.citatum.presentation.viewmodel.QuoteTagJoinViewModel;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.text.DateFormat;
 
 public class DeleteQuoteAdapter extends ListAdapter<Quote, DeleteQuoteAdapter.DeleteQuoteViewHolder> {
+
+    private Fragment fragment;
+    private QuoteTagJoinViewModel quoteTagJoinViewModel;
 
     private static final DiffUtil.ItemCallback<Quote> DIFF_CALLBACK = new DiffUtil.ItemCallback<Quote>() {
         @Override
@@ -31,19 +36,23 @@ public class DeleteQuoteAdapter extends ListAdapter<Quote, DeleteQuoteAdapter.De
         }
     };
 
-    public DeleteQuoteAdapter() {
+    public DeleteQuoteAdapter(Fragment fragment) {
         super(DIFF_CALLBACK);
+        this.fragment = fragment;
+        this.quoteTagJoinViewModel = new ViewModelProvider(fragment).get(QuoteTagJoinViewModel.class);
     }
 
     public final static class DeleteQuoteViewHolder extends RecyclerView.ViewHolder {
 
-        TextView titleText, authorText, dataText;
+        TextView quoteText, authorTitleText, dataText;
+        RecyclerView tagsRv;
 
         public DeleteQuoteViewHolder(@NonNull View itemView) {
             super(itemView);
-            titleText = itemView.findViewById(R.id.qi_title_text);
-            authorText = itemView.findViewById(R.id.qi_author_text);
+            quoteText = itemView.findViewById(R.id.qi_quote_text);
+            authorTitleText = itemView.findViewById(R.id.qi_author_title_text);
             dataText = itemView.findViewById(R.id.qi_data_text);
+            tagsRv = itemView.findViewById(R.id.qi_rv);
         }
     }
 
@@ -57,9 +66,17 @@ public class DeleteQuoteAdapter extends ListAdapter<Quote, DeleteQuoteAdapter.De
     @Override
     public void onBindViewHolder(@NonNull DeleteQuoteViewHolder holder, int position) {
         Quote quote = getItem(position);
-        holder.titleText.setText(quote.getTitle());
-        holder.authorText.setText(quote.getAuthor());
-        holder.dataText.setText(quote.getDate());
+        holder.quoteText.setText(quote.getText());
+        holder.authorTitleText.setText("© " + quote.getAuthor() + ", " + quote.getTitle());
+        holder.dataText.setText(DateFormat.getDateInstance(DateFormat.SHORT).format(quote.getDate()));
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(fragment.getContext(), RecyclerView.HORIZONTAL, false);
+        holder.tagsRv.setLayoutManager(layoutManager);
+        QuoteTagAdapter adapter = new QuoteTagAdapter();
+        holder.tagsRv.setAdapter(adapter);
+        quoteTagJoinViewModel.getTagsForQuote(quote.getUid()).observe(fragment.getViewLifecycleOwner(), tags -> {
+            adapter.submitList(tags);
+        });
     }
 
     public Quote getQuoteAtPosition(int position) {

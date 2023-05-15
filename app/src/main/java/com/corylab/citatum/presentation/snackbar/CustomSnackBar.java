@@ -1,4 +1,4 @@
-package com.corylab.citatum;
+package com.corylab.citatum.presentation.snackbar;
 
 import android.content.Context;
 import android.view.Gravity;
@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.corylab.citatum.R;
 import com.google.android.material.snackbar.Snackbar;
 
 public class CustomSnackBar {

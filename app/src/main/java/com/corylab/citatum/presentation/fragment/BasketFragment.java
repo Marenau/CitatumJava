@@ -6,14 +6,12 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,17 +19,16 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.corylab.citatum.CustomSnackBar;
 import com.corylab.citatum.R;
 import com.corylab.citatum.data.model.Quote;
 import com.corylab.citatum.databinding.FragmentBasketBinding;
 import com.corylab.citatum.presentation.activity.MainActivity;
 import com.corylab.citatum.presentation.adapter.DeleteQuoteAdapter;
+import com.corylab.citatum.presentation.snackbar.CustomSnackBar;
 import com.corylab.citatum.presentation.viewmodel.QuoteViewModel;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -83,9 +80,11 @@ public class BasketFragment extends Fragment {
     private void init() {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(activity, RecyclerView.VERTICAL, false);
         binding.bfRv.setLayoutManager(layoutManager);
-        DeleteQuoteAdapter quoteAdapter = new DeleteQuoteAdapter();
+        DeleteQuoteAdapter quoteAdapter = new DeleteQuoteAdapter(this);
         binding.bfRv.setAdapter(quoteAdapter);
-        quoteViewModel.getRemovedQuotes().observe(getViewLifecycleOwner(), quotes -> quoteAdapter.submitList(quotes));
+        quoteViewModel.getRemovedQuotes().observe(getViewLifecycleOwner(), quotes -> {
+            quoteAdapter.submitList(quotes);
+        });
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
             @Override
@@ -168,6 +167,12 @@ public class BasketFragment extends Fragment {
             }
         });
         itemTouchHelper.attachToRecyclerView(binding.bfRv);
+
+        Animation animation = AnimationUtils.loadAnimation(activity, R.anim.image_scale);
+        binding.tgfInfoIcon.setOnClickListener(v -> {
+            v.startAnimation(animation);
+            CustomSnackBar.createSnackbar(getView(), activity, R.string.bf_quotes_deleting_text);
+        });
     }
 
     private void createUndoSnackbar(View view, Quote quote) {
@@ -177,7 +182,9 @@ public class BasketFragment extends Fragment {
         TextView message = customView.findViewById(R.id.sus_text);
         message.setText(getString(R.string.sus_quote_delete_text));
         Button undoButton = customView.findViewById(R.id.sus_undo_text);
+        Animation animation = AnimationUtils.loadAnimation(activity, R.anim.image_scale);
         undoButton.setOnClickListener(view1 -> {
+            view1.startAnimation(animation);
             quoteViewModel.insert(quote);
             undoButton.setOnClickListener(null);
         });
@@ -186,4 +193,5 @@ public class BasketFragment extends Fragment {
         snackbarLayout.addView(customView, 0);
         snackbar.show();
     }
+
 }

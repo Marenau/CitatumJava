@@ -4,5 +4,7 @@ public enum AccountStatus {
     UNCONNECTED,
     CREATED,
     REJECTED,
-    INCORRECT
+    INCORRECT,
+    FORGOT,
+    FORGOT_SENT
 }

@@ -16,9 +16,9 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.corylab.citatum.R;
-import com.corylab.citatum.presentation.enumeration.AccountStatus;
-import com.corylab.citatum.presentation.activity.LoginActivity;
 import com.corylab.citatum.databinding.FragmentRegisterBinding;
+import com.corylab.citatum.presentation.activity.LoginActivity;
+import com.corylab.citatum.presentation.enumeration.AccountStatus;
 import com.corylab.citatum.presentation.fragment.dialog.ShowNotificationFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -40,6 +40,16 @@ public class RegisterFragment extends Fragment {
         super.onAttach(context);
     }
 
+    @Nullable
+    @Override
+    public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
+        if (enter) {
+            return AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_left);
+        } else {
+            return AnimationUtils.loadAnimation(getContext(), R.anim.slide_out_left);
+        }
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,19 +69,17 @@ public class RegisterFragment extends Fragment {
         init();
     }
 
-    @Nullable
-    @Override
-    public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
-        if (enter) {
-            return AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_left);
-        } else {
-            return AnimationUtils.loadAnimation(getContext(), R.anim.slide_out_left);
-        }
-    }
-
     private void init() {
-        binding.rgfLoginCv.setOnClickListener(view -> Navigation.findNavController(view).navigateUp());
-        binding.rgfEntranceIcon.setOnClickListener(view -> createAccount());
+        Animation animation = AnimationUtils.loadAnimation(activity, R.anim.image_scale);
+
+        binding.rgfLoginCv.setOnClickListener(view -> {
+            view.startAnimation(animation);
+            Navigation.findNavController(view).navigateUp();
+        });
+        binding.rgfEntranceIcon.setOnClickListener(view -> {
+            view.startAnimation(animation);
+            createAccount();
+        });
     }
 
     private void createAccount() {
@@ -86,11 +94,11 @@ public class RegisterFragment extends Fragment {
             auth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(activity, task -> {
                         if (task.isSuccessful()) {
-                            showNotification(AccountStatus.CREATED);
                             DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");
                             String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
                             usersRef.child(userId).child("username").setValue(username);
                             FirebaseAuth.getInstance().signOut();
+                            showNotification(AccountStatus.CREATED);
                         } else {
                             showNotification(AccountStatus.REJECTED);
                         }

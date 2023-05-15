@@ -26,7 +26,12 @@
 
     <!-- Hub fragment elements -->
     <string name="hf_page_text">CITATUM</string>
+    <string name="hf_welcome_morning_text">Good morning!</string>
+    <string name="hf_welcome_day_text">Good day!</string>
+    <string name="hf_welcome_evening_text">Good evening!</string>
+    <string name="hf_welcome_night_text">Good night!</string>
     <string name="hf_day_quote_text">Quote of the day:</string>
+    <string name="hf_day_base_quote">Nov or never!</string>
     <string name="hf_quote_cv_edit_text">Edit…</string>
     <string name="hf_repository_text">Repository:</string>
     <string name="hf_tags_text">Tags:</string>
@@ -46,8 +51,10 @@
     <string name="qc_quotes_update">The quote was successfully update.</string>
     <string name="qc_quotes_remove">The quote was placed in the basket.</string>
     <string name="qc_add_quote_request">Save the quote for making changes.</string>
+    <string name="qc_quote_bookmark_enable">The quote was successfully added to bookmarks.</string>
+    <string name="qc_quote_bookmark_disable">The quote was successfully remove from bookmarks.</string>
 
-    <!-- Repository fragment elements -->
+    <!-- QuoteRepository fragment elements -->
     <string name="rf_page_text">Repository</string>
 
     <!-- Titles fragment elements -->
@@ -62,6 +69,7 @@
 
     <!-- Basket fragment elements -->
     <string name="bf_page_text">Basket</string>
+    <string name="bf_quotes_deleting_text">Quotes are automatically deleted after 30 days from the date of their placement in the basket.</string>
 
     <!-- Settings fragment elements -->
     <string name="sf_page_text">Settings</string>
@@ -90,7 +98,14 @@
     <string name="incorrect_login_title_text">Ops!</string>
     <string name="incorrect_login_message_text">It looks like your data is incorrect. Make sure that you have entered the correct email address and password.</string>
     <string name="incorrect_login_button_text">Well…</string>
+    <string name="forgot_password_title_text">Attention</string>
+    <string name="forgot_password_message_text">Enter your email address in the field on the login screen, then click on the "forgot" button again.</string>
+    <string name="forgot_password_button_text">OK</string>
+    <string name="forgot_password_sent_title_text">Tip top</string>
+    <string name="forgot_password_sent_message_text">The message has been sent to your email. Follow the link provided in the email.</string>
+    <string name="forgot_password_sent_button_text">OK</string>
 
+    <!-- Text of notifications when deleted -->
     <string name="sus_undo_text">Undo</string>
     <string name="sus_text">Tag</string>
     <string name="sus_delete_text">was delete.</string>

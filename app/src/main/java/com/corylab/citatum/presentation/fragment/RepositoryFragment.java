@@ -6,35 +6,28 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.corylab.citatum.CustomSnackBar;
 import com.corylab.citatum.R;
 import com.corylab.citatum.data.model.Quote;
 import com.corylab.citatum.databinding.FragmentRepositoryBinding;
 import com.corylab.citatum.presentation.activity.MainActivity;
-import com.corylab.citatum.presentation.viewmodel.QuoteViewModel;
 import com.corylab.citatum.presentation.adapter.QuoteAdapter;
-import com.google.android.material.snackbar.Snackbar;
+import com.corylab.citatum.presentation.snackbar.CustomSnackBar;
+import com.corylab.citatum.presentation.viewmodel.QuoteViewModel;
 
 public class RepositoryFragment extends Fragment {
 
@@ -50,6 +43,16 @@ public class RepositoryFragment extends Fragment {
     public void onAttach(@NonNull Context context) {
         activity = (MainActivity) context;
         super.onAttach(context);
+    }
+
+    @Nullable
+    @Override
+    public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
+        if (enter) {
+            return AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_left);
+        } else {
+            return AnimationUtils.loadAnimation(getContext(), R.anim.slide_out_left);
+        }
     }
 
     @Override
@@ -71,28 +74,20 @@ public class RepositoryFragment extends Fragment {
         init();
     }
 
-    @Nullable
-    @Override
-    public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
-        if (enter) {
-            return AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_left);
-        } else {
-            return AnimationUtils.loadAnimation(getContext(), R.anim.slide_out_left);
-        }
-    }
-
     private void init() {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(activity, RecyclerView.VERTICAL, false);
         binding.rfRecyclerView.setLayoutManager(layoutManager);
-        QuoteAdapter quoteAdapter = new QuoteAdapter();
+        QuoteAdapter quoteAdapter = new QuoteAdapter(this);
         binding.rfRecyclerView.setAdapter(quoteAdapter);
-        quoteViewModel.getAllActive().observe(getViewLifecycleOwner(), quotes -> quoteAdapter.submitList(quotes));
+        quoteViewModel.getAllActive().observe(getViewLifecycleOwner(), quotes -> {
+            quoteAdapter.submitList(quotes);
+        });
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
             @Override
             public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
                 int dragFlags = 0;
-                int swipeFlags = ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
+                int swipeFlags = ItemTouchHelper.RIGHT;
                 return makeMovementFlags(dragFlags, swipeFlags);
             }
 
@@ -105,17 +100,15 @@ public class RepositoryFragment extends Fragment {
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 int position = viewHolder.getAdapterPosition();
                 Quote quote = new Quote(quoteAdapter.getQuoteAtPosition(position));
-                if (direction == ItemTouchHelper.LEFT) {
-                    quote.setRemovedFlag(1);
-                    quoteViewModel.update(quote);
-                    createUndoSnackbar(getView(), quote);
-                } else if (direction == ItemTouchHelper.RIGHT) {
-                    if (quote.getBookmarkFlag() == 1)
+                if (direction == ItemTouchHelper.RIGHT) {
+                    if (quote.getBookmarkFlag() == 1) {
                         quote.setBookmarkFlag(0);
-                    else
+                        CustomSnackBar.createSnackbar(getView(), activity, R.string.qc_quote_bookmark_disable);
+                    } else {
                         quote.setBookmarkFlag(1);
+                        CustomSnackBar.createSnackbar(getView(), activity, R.string.qc_quote_bookmark_enable);
+                    }
                     quoteViewModel.update(quote);
-                    CustomSnackBar.createSnackbar(getView(), activity, R.string.qc_quotes_update);
                 }
             }
 
@@ -132,8 +125,8 @@ public class RepositoryFragment extends Fragment {
                         RectF rect = new RectF(itemView.getLeft(), itemView.getTop(), dX + itemView.getRight() / 2, itemView.getBottom());
                         c.drawRoundRect(rect, cornerRadius, cornerRadius, paint);
 
-                        Drawable bookmarkIcon = ContextCompat.getDrawable(activity, R.drawable.icon_bookmark);
-                        Drawable.ConstantState constantState = bookmarkIcon.mutate().getConstantState();
+                        Drawable basketIcon = ContextCompat.getDrawable(activity, R.drawable.icon_bookmark);
+                        Drawable.ConstantState constantState = basketIcon.mutate().getConstantState();
                         Drawable drawableCopy = constantState.newDrawable();
                         drawableCopy.setTint(ContextCompat.getColor(activity, R.color.background_color));
                         int iconWidth = drawableCopy.getIntrinsicWidth();
@@ -145,51 +138,11 @@ public class RepositoryFragment extends Fragment {
                         int iconBottom = iconTop + iconHeight;
                         drawableCopy.setBounds(iconLeft, iconTop, iconRight, iconBottom);
                         drawableCopy.draw(c);
-
-                    } else if (dX < 0) {
-                        paint.setColor(ContextCompat.getColor(activity, R.color.light_red));
-                        paint.setAlpha((int) (alpha * 255));
-                        float cornerRadius = 20f;
-                        RectF rect = new RectF(itemView.getRight() - itemView.getRight() / 2 + dX, itemView.getTop(), itemView.getRight(), itemView.getBottom());
-                        c.drawRoundRect(rect, cornerRadius, cornerRadius, paint);
-
-                        Drawable basketIcon = ContextCompat.getDrawable(activity, R.drawable.icon_basket);
-                        Drawable.ConstantState constantState = basketIcon.mutate().getConstantState();
-                        Drawable drawableCopy = constantState.newDrawable();
-                        drawableCopy.setTint(ContextCompat.getColor(activity, R.color.background_color));
-                        int iconWidth = drawableCopy.getIntrinsicWidth();
-                        int iconHeight = drawableCopy.getIntrinsicHeight();
-                        int iconTop = itemView.getTop() + (itemView.getHeight() - iconHeight) / 2;
-                        int iconMargin = (itemView.getHeight() - iconHeight) / 5;
-                        int iconLeft = itemView.getRight() - iconMargin - iconWidth;
-                        int iconRight = itemView.getRight() - iconMargin;
-                        int iconBottom = iconTop + iconHeight;
-                        drawableCopy.setBounds(iconLeft, iconTop, iconRight, iconBottom);
-                        drawableCopy.draw(c);
-
                     }
                 }
                 super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
             }
         });
         itemTouchHelper.attachToRecyclerView(binding.rfRecyclerView);
-    }
-
-    private void createUndoSnackbar(View view, Quote quote) {
-        Snackbar snackbar = Snackbar.make(view, "", Snackbar.LENGTH_SHORT);
-        LayoutInflater inflater = LayoutInflater.from(getContext());
-        View customView = inflater.inflate(R.layout.show_undo_snackbar, null);
-        TextView message = customView.findViewById(R.id.sus_text);
-        message.setText(getString(R.string.sus_quote_delete_text));
-        Button undoButton = customView.findViewById(R.id.sus_undo_text);
-        undoButton.setOnClickListener(view1 -> {
-            quote.setRemovedFlag(0);
-            quoteViewModel.insert(quote);
-            undoButton.setOnClickListener(null);
-        });
-        snackbar.getView().setBackgroundResource(R.drawable.empty_drawable);
-        Snackbar.SnackbarLayout snackbarLayout = (Snackbar.SnackbarLayout) snackbar.getView();
-        snackbarLayout.addView(customView, 0);
-        snackbar.show();
     }
 }

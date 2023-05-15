@@ -11,22 +11,16 @@ import android.view.animation.AnimationUtils;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.corylab.citatum.R;
-import com.corylab.citatum.data.model.Quote;
-import com.corylab.citatum.data.model.Tag;
 import com.corylab.citatum.databinding.FragmentTagBinding;
 import com.corylab.citatum.presentation.activity.MainActivity;
 import com.corylab.citatum.presentation.adapter.QuoteAdapter;
 import com.corylab.citatum.presentation.viewmodel.QuoteTagJoinViewModel;
-import com.corylab.citatum.presentation.viewmodel.QuoteViewModel;
 import com.corylab.citatum.presentation.viewmodel.TagViewModel;
-
-import java.util.List;
 
 public class TagFragment extends Fragment {
 
@@ -82,7 +76,7 @@ public class TagFragment extends Fragment {
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
         binding.tfRv.setLayoutManager(layoutManager);
-        QuoteAdapter quoteAdapter = new QuoteAdapter();
+        QuoteAdapter quoteAdapter = new QuoteAdapter(this);
         binding.tfRv.setAdapter(quoteAdapter);
         quoteTagJoinViewModel.getQuotesForTag(uid).observe(getViewLifecycleOwner(), quotes -> quoteAdapter.submitList(quotes));
     }

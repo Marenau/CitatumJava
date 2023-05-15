@@ -25,6 +25,9 @@ public interface QuoteDao {
     @Query("SELECT * FROM quotes_table ORDER BY uid")
     LiveData<List<EntityQuote>> getAll();
 
+    @Query("SELECT * FROM quotes_table WHERE remove_flag != 1 ORDER BY uid DESC LIMIT 3")
+    LiveData<List<EntityQuote>> getThreeQuotes();
+
     @Query("SELECT * FROM quotes_table WHERE remove_flag != 1 ORDER BY uid")
     LiveData<List<EntityQuote>> getAllActive();
 

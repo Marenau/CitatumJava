@@ -47,6 +47,16 @@ public class TagSelectionFragment extends Fragment {
         super.onAttach(context);
     }
 
+    @Nullable
+    @Override
+    public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
+        if (enter) {
+            return AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_left);
+        } else {
+            return AnimationUtils.loadAnimation(getContext(), R.anim.slide_out_left);
+        }
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,16 +77,6 @@ public class TagSelectionFragment extends Fragment {
         init();
     }
 
-    @Nullable
-    @Override
-    public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
-        if (enter) {
-            return AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_left);
-        } else {
-            return AnimationUtils.loadAnimation(getContext(), R.anim.slide_out_left);
-        }
-    }
-
     private void init() {
         final int[] uid = {-1};
         Bundle trBundle = getArguments();
@@ -95,7 +95,10 @@ public class TagSelectionFragment extends Fragment {
         binding.stfCurrentTagsRv.setAdapter(tagAdapter2);
         quoteTagJoinViewModel.getTagsForQuote(uid[0]).observe(getViewLifecycleOwner(), tags -> tagAdapter2.submitList(tags));
 
+        Animation animation = AnimationUtils.loadAnimation(activity, R.anim.image_scale);
+
         binding.stfConfirmIcon.setOnClickListener(view -> {
+            view.startAnimation(animation);
             List<Tag> chosenList = tagAdapter.getChosenList();
             for (Tag t : chosenList)
                 quoteTagJoinViewModel.insert(new QuoteTagJoin(uid[0], t.getUid()));
@@ -105,9 +108,8 @@ public class TagSelectionFragment extends Fragment {
             Navigation.findNavController(view).navigateUp();
         });
 
-        Animation animation = AnimationUtils.loadAnimation(activity, R.anim.image_scale);
         binding.stfTagIcon.setOnClickListener(view -> {
-            binding.stfTagIcon.startAnimation(animation);
+            view.startAnimation(animation);
             Navigation.findNavController(view).navigate(R.id.action_tagSelectionFragment_to_tagCreateFragment);
         });
     }

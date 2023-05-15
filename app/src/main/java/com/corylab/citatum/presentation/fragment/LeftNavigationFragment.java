@@ -3,7 +3,6 @@ package com.corylab.citatum.presentation.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +18,8 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.corylab.citatum.R;
-import com.corylab.citatum.presentation.activity.MainActivity;
 import com.corylab.citatum.databinding.FragmentLeftNavigationMenuBinding;
+import com.corylab.citatum.presentation.activity.MainActivity;
 
 public class LeftNavigationFragment extends Fragment {
 
@@ -54,40 +53,39 @@ public class LeftNavigationFragment extends Fragment {
         Animation animation = AnimationUtils.loadAnimation(activity, R.anim.image_scale);
 
         binding.lmSettingsTv.setOnClickListener(view -> {
-            binding.lmSettingsTv.startAnimation(animation);
+            view.startAnimation(animation);
             navigate(R.id.settingsFragment);
         });
         binding.lmPencilTv.setOnClickListener(view -> {
-            binding.lmPencilTv.startAnimation(animation);
+            view.startAnimation(animation);
             navigate(R.id.quoteCreateFragment);
         });
-        binding.lmHubTv.setOnClickListener(view1 -> {
-            binding.lmHubTv.startAnimation(animation);
+        binding.lmHubTv.setOnClickListener(view -> {
+            view.startAnimation(animation);
             navigate(R.id.hubFragment);
         });
-        binding.lmRepositoryTv.setOnClickListener(view2 -> {
-            binding.lmRepositoryTv.startAnimation(animation);
+        binding.lmRepositoryTv.setOnClickListener(view -> {
+            view.startAnimation(animation);
             navigate(R.id.repositoryFragment);
         });
         binding.lmTagsTv.setOnClickListener(view -> {
-            binding.lmTagsTv.startAnimation(animation);
+            view.startAnimation(animation);
             navigate(R.id.tagsFragment);
         });
         binding.lmBookmarkTv.setOnClickListener(view -> {
-            binding.lmBookmarkTv.startAnimation(animation);
+            view.startAnimation(animation);
             navigate(R.id.bookmarksFragment);
         });
         binding.lmBasketTv.setOnClickListener(view -> {
-            binding.lmBasketTv.startAnimation(animation);
+            view.startAnimation(animation);
             navigate(R.id.basketFragment);
         });
         binding.lmFeedbackTv.setOnClickListener(view -> {
-            binding.lmFeedbackTv.startAnimation(animation);
             DrawerLayout drawer = activity.findViewById(R.id.ma_drawer);
             drawer.closeDrawer(GravityCompat.START);
             Intent emailIntent = new Intent(Intent.ACTION_SEND);
             emailIntent.setType("plain/text");
-            emailIntent.putExtra(Intent.EXTRA_EMAIL, getString(R.string.email_address));
+            emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{getString(R.string.email_address)});
             emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.email_subject));
             emailIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.email_text));
             if (emailIntent.resolveActivity(activity.getPackageManager()) != null) {
@@ -100,8 +98,11 @@ public class LeftNavigationFragment extends Fragment {
         View navigationContainerView = activity.findViewById(R.id.nav_container_view);
         NavController navController = Navigation.findNavController(navigationContainerView);
         int currentDestination = navController.getCurrentDestination().getId();
-        if (currentDestination != id)
-            navController.navigate(id);
+        if (currentDestination != id) {
+            navController.popBackStack(R.id.hubFragment, false);
+            if (id != R.id.hubFragment)
+                navController.navigate(id);
+        }
         DrawerLayout drawer = activity.findViewById(R.id.ma_drawer);
         drawer.closeDrawer(GravityCompat.START);
     }

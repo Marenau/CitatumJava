@@ -4,26 +4,35 @@ import android.app.Application;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
-import com.corylab.citatum.data.entity.EntityQuote;
-import com.corylab.citatum.data.entity.QuoteTagJoin;
 import com.corylab.citatum.data.model.Quote;
-import com.corylab.citatum.data.repository.Repository;
+import com.corylab.citatum.data.repository.QuoteRepository;
+import com.google.firebase.database.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class QuoteViewModel extends AndroidViewModel {
-    private Repository repository;
+
+    private final QuoteRepository repository;
     private final LiveData<List<Quote>> quotes;
+    private final MutableLiveData<List<Quote>> filterQuotes;
 
-    public QuoteViewModel(Application application) {
+    public QuoteViewModel(@NotNull Application application) {
         super(application);
-        repository = new Repository(application);
+        repository = new QuoteRepository(application);
+        filterQuotes = new MutableLiveData<>(new ArrayList<>());
         quotes = repository.getQuotes();
-    }
-
-    public LiveData<List<Quote>> getQuotes() {
-        return quotes;
+        quotes.observeForever(quoteList -> {
+            List<Quote> actualQuote = new ArrayList<>();
+            for (Quote q : quoteList) {
+                if (q.getRemovedFlag() != 1)
+                    actualQuote.add(q);
+            }
+            filterQuotes.setValue(actualQuote);
+        });
     }
 
     public void insert(Quote quote) {
@@ -46,8 +55,12 @@ public class QuoteViewModel extends AndroidViewModel {
         return repository.getQuoteByUid(uid);
     }
 
+    public LiveData<List<Quote>> getThreeQuotes() {
+        return repository.getThreeQuotes();
+    }
+
     public LiveData<List<Quote>> getBookmarkedQuotes() {
-       return repository.getBookmarkedQuotes();
+        return repository.getBookmarkedQuotes();
     }
 
     public LiveData<List<Quote>> getRemovedQuotes() {
@@ -56,5 +69,36 @@ public class QuoteViewModel extends AndroidViewModel {
 
     public LiveData<List<Quote>> getAllActive() {
         return repository.getAllActive();
+    }
+
+
+    public void filterData(String query) {
+        query = query.trim().toLowerCase();
+        List<Quote> dataList = quotes.getValue();
+        List<Quote> filteredDataList = new ArrayList<>();
+        for (Quote q : dataList) {
+            if (q.getRemovedFlag() != 1 && (q.getTitle().toLowerCase().contains(query) || q.getAuthor().toLowerCase().contains(query) ||
+                    q.getText().toLowerCase().contains(query)))
+                filteredDataList.add(q);
+        }
+        filterQuotes.setValue(filteredDataList);
+    }
+
+    public LiveData<List<Quote>> getFilterQuotes() {
+        return filterQuotes;
+    }
+
+    public void removeOutdatedQuotes() {
+        List<Quote> quotes = getRemovedQuotes().getValue();
+        if (quotes != null) {
+            for (Quote q : quotes) {
+                Calendar calendar = Calendar.getInstance();
+                long currentTimestamp = calendar.getTimeInMillis();
+                long lastRequestTimestamp = q.getRemovedDate();
+                if (lastRequestTimestamp != 0 && currentTimestamp - lastRequestTimestamp > 30L * 24 * 60 * 60 * 1000) {
+                    delete(q);
+                }
+            }
+        }
     }
 }

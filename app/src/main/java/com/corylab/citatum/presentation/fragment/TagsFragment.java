@@ -25,7 +25,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.corylab.citatum.R;
-import com.corylab.citatum.data.model.Quote;
 import com.corylab.citatum.data.model.Tag;
 import com.corylab.citatum.databinding.FragmentTagsBinding;
 import com.corylab.citatum.presentation.activity.MainActivity;
@@ -49,6 +48,16 @@ public class TagsFragment extends Fragment {
         super.onAttach(context);
     }
 
+    @Nullable
+    @Override
+    public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
+        if (enter) {
+            return AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_left);
+        } else {
+            return AnimationUtils.loadAnimation(getContext(), R.anim.slide_out_left);
+        }
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,22 +77,15 @@ public class TagsFragment extends Fragment {
         init();
     }
 
-    @Nullable
-    @Override
-    public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
-        if (enter) {
-            return AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_left);
-        } else {
-            return AnimationUtils.loadAnimation(getContext(), R.anim.slide_out_left);
-        }
-    }
-
     private void init() {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
         binding.tgfRecyclerView.setLayoutManager(layoutManager);
-        TagAdapter tagAdapter = new TagAdapter();
+        TagAdapter tagAdapter = new TagAdapter(R.layout.tag_item);
         binding.tgfRecyclerView.setAdapter(tagAdapter);
-        tagViewModel.getTags().observe(getViewLifecycleOwner(), tags -> tagAdapter.submitList(tags));
+        tagViewModel.getTags().observe(getViewLifecycleOwner(), tags -> {
+            tagAdapter.submitList(tags);
+        });
+
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
             @Override
             public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
@@ -177,9 +179,12 @@ public class TagsFragment extends Fragment {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View customView = inflater.inflate(R.layout.show_undo_snackbar, null);
         TextView message = customView.findViewById(R.id.sus_text);
-        message.setText(getString(R.string.sus_quote_delete_text));
+        String messageText = getString(R.string.sus_text) + " " + tag.getName() + " " + getString(R.string.sus_delete_text);
+        message.setText(messageText);
         Button undoButton = customView.findViewById(R.id.sus_undo_text);
+        Animation animation = AnimationUtils.loadAnimation(activity, R.anim.image_scale);
         undoButton.setOnClickListener(view1 -> {
+            view1.startAnimation(animation);
             tagViewModel.insert(tag);
             undoButton.setOnClickListener(null);
         });

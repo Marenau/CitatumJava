@@ -5,20 +5,18 @@ import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.corylab.citatum.data.entity.EntityTag;
-import com.corylab.citatum.data.model.Quote;
 import com.corylab.citatum.data.model.Tag;
-import com.corylab.citatum.data.repository.Repository;
+import com.corylab.citatum.data.repository.TagRepository;
 
 import java.util.List;
 
 public class TagViewModel extends AndroidViewModel {
-    private Repository repository;
+    private TagRepository repository;
     private final LiveData<List<Tag>> tags;
 
     public TagViewModel(Application application) {
         super(application);
-        repository = new Repository(application);
+        repository = new TagRepository(application);
         tags = repository.getTags();
     }
 
@@ -40,9 +38,5 @@ public class TagViewModel extends AndroidViewModel {
 
     public Tag getTagById(int id) {
         return repository.getTagById(id);
-    }
-
-    public LiveData<List<Tag>> getTagsForQuote(int id) {
-        return repository.getTagsForQuote(id);
     }
 }

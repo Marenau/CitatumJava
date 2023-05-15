@@ -17,8 +17,8 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.corylab.citatum.R;
-import com.corylab.citatum.presentation.activity.MainActivity;
 import com.corylab.citatum.databinding.FragmentBottomNavigationBinding;
+import com.corylab.citatum.presentation.activity.MainActivity;
 
 public class BottomNavigationFragment extends Fragment {
 
@@ -63,8 +63,18 @@ public class BottomNavigationFragment extends Fragment {
 
         DrawerLayout drawer = activity.findViewById(R.id.ma_drawer);
         binding.bnMenuIcon.setOnClickListener(view -> {
-            binding.bnMenuIcon.startAnimation(animation);
+            view.startAnimation(animation);
             drawer.openDrawer(GravityCompat.START);
+        });
+
+        binding.bnSearchIcon.setOnClickListener(view -> {
+            view.startAnimation(animation);
+            NavController navController = Navigation.findNavController(navigationContainerView);
+            int currentDestination = navController.getCurrentDestination().getId();
+            int destination = R.id.searchFragment;
+            if (currentDestination != destination) {
+                navController.navigate(R.id.searchFragment);
+            }
         });
     }
 }

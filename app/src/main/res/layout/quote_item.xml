@@ -16,14 +16,14 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/qi_title_text"
+            android:id="@+id/qi_author_title_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/gothampro_medium"
+            android:fontFamily="@font/gothampro"
             android:singleLine="true"
             android:text="@string/default_text"
             android:textColor="@color/black"
-            android:textSize="35sp" />
+            android:textSize="30sp" />
 
         <ImageView
             android:id="@+id/qc_division_rectangle"
@@ -33,12 +33,14 @@
             app:srcCompat="@drawable/division_rectangle" />
 
         <TextView
-            android:id="@+id/qi_author_text"
+            android:id="@+id/qi_quote_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:ellipsize="end"
             android:fontFamily="@font/gothampro"
-            android:singleLine="true"
+            android:maxLines="2"
+            android:minLines="1"
             android:text="@string/default_text"
             android:textColor="@color/black"
             android:textSize="25sp" />
@@ -46,7 +48,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <TextView
@@ -57,6 +59,13 @@
                 android:text="@string/default_text"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/qi_rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:overScrollMode="never" />
 
         </LinearLayout>
 

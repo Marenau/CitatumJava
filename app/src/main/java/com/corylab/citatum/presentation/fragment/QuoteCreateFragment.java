@@ -5,7 +5,6 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,21 +12,20 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.corylab.citatum.presentation.SmoothScrollRunnable;
+import com.corylab.citatum.presentation.snackbar.CustomSnackBar;
 import com.corylab.citatum.R;
 import com.corylab.citatum.data.model.Quote;
-import com.corylab.citatum.data.model.Tag;
 import com.corylab.citatum.databinding.FragmentQuoteCreateBinding;
 import com.corylab.citatum.presentation.adapter.QuoteTagAdapter;
 import com.corylab.citatum.presentation.viewmodel.QuoteTagJoinViewModel;
@@ -37,7 +35,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
+import java.util.Calendar;
 
 public class QuoteCreateFragment extends Fragment {
 
@@ -47,6 +45,7 @@ public class QuoteCreateFragment extends Fragment {
     private QuoteTagJoinViewModel quoteTagJoinViewModel;
 
     private Quote thisQuote = new Quote();
+    private SmoothScrollRunnable scrollRunnable;
 
     public QuoteCreateFragment() {
         super(R.layout.fragment_quote_create);
@@ -65,10 +64,20 @@ public class QuoteCreateFragment extends Fragment {
         outState.putString("title", thisQuote.getTitle());
         outState.putString("author", thisQuote.getAuthor());
         outState.putString("text", thisQuote.getText());
-        outState.putString("date", thisQuote.getDate());
+        outState.putLong("date", thisQuote.getDate());
         outState.putString("page_number", thisQuote.getPageNumber());
         outState.putInt("bookmark_flag", thisQuote.getBookmarkFlag());
         outState.putInt("remove_flag", thisQuote.getRemovedFlag());
+    }
+
+    @Nullable
+    @Override
+    public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
+        if (enter) {
+            return AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
+        } else {
+            return AnimationUtils.loadAnimation(getContext(), R.anim.fade_out);
+        }
     }
 
     @Override
@@ -80,7 +89,7 @@ public class QuoteCreateFragment extends Fragment {
             thisQuote.setTitle(savedInstanceState.getString("title"));
             thisQuote.setAuthor(savedInstanceState.getString("author"));
             thisQuote.setText(savedInstanceState.getString("text"));
-            thisQuote.setDate(savedInstanceState.getString("date"));
+            thisQuote.setDate(savedInstanceState.getLong("date"));
             thisQuote.setPageNumber(savedInstanceState.getString("page_number"));
             thisQuote.setBookmarkFlag(savedInstanceState.getInt("bookmark_flag"));
             thisQuote.setRemovedFlag(savedInstanceState.getInt("remove_flag"));
@@ -103,14 +112,22 @@ public class QuoteCreateFragment extends Fragment {
         init();
     }
 
-    @Nullable
     @Override
-    public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
-        if (enter) {
-            return AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
-        } else {
-            return AnimationUtils.loadAnimation(getContext(), R.anim.fade_out);
-        }
+    public void onPause() {
+        super.onPause();
+        scrollRunnable.stop();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        scrollRunnable.start();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        scrollRunnable.stop();
     }
 
     private void init() {
@@ -125,11 +142,6 @@ public class QuoteCreateFragment extends Fragment {
             InputMethodManager inputMethodManagerShow = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
             inputMethodManagerShow.showSoftInput(binding.qcTextEt, InputMethodManager.SHOW_IMPLICIT);
         }
-        if (quoteViewModel.getMaxId() == 0) {
-            binding.qcTagIcon.setVisibility(View.INVISIBLE);
-            binding.qcBookmarkIcon.setVisibility(View.INVISIBLE);
-            binding.qcBasketIcon.setVisibility(View.INVISIBLE);
-        }
 
         binding.qcTitleEt.setText(thisQuote.getTitle());
         binding.qcAuthorEt.setText(thisQuote.getAuthor());
@@ -143,27 +155,36 @@ public class QuoteCreateFragment extends Fragment {
         binding.qcTagsRv.setLayoutManager(layoutManager);
         QuoteTagAdapter adapter = new QuoteTagAdapter();
         binding.qcTagsRv.setAdapter(adapter);
-        quoteTagJoinViewModel.getTagsForQuote(thisQuote.getUid()).observe(getViewLifecycleOwner(), tags -> adapter.submitList(tags));
+        scrollRunnable = new SmoothScrollRunnable(binding.qcTagsRv);
+        quoteTagJoinViewModel.getTagsForQuote(thisQuote.getUid()).observe(getViewLifecycleOwner(), tags -> {
+            adapter.submitList(tags);
+            scrollRunnable.start();
+        });
 
         Animation animation = AnimationUtils.loadAnimation(activity, R.anim.image_scale);
 
         binding.qcConfirmIcon.setOnClickListener(view -> {
-            binding.qcConfirmIcon.startAnimation(animation);
+            view.startAnimation(animation);
             updateQuote();
             if (thisQuote.getUid() == -1) {
+                int beforeId = quoteViewModel.getMaxId();
                 quoteViewModel.insert(thisQuote);
-                thisQuote = quoteViewModel.getQuoteByUid(quoteViewModel.getMaxId());
-                createSnackbar(R.string.qc_quotes_added);
+                int nextId = quoteViewModel.getMaxId();
+                while (beforeId == nextId) {
+                    nextId = quoteViewModel.getMaxId();
+                }
+                thisQuote = quoteViewModel.getQuoteByUid(nextId);
+                CustomSnackBar.createSnackbar(view, activity, R.string.qc_quotes_added);
             } else {
                 quoteViewModel.update(thisQuote);
-                createSnackbar(R.string.qc_quotes_update);
+                CustomSnackBar.createSnackbar(view, activity, R.string.qc_quotes_update);
             }
             InputMethodManager inputMethodManagerHide = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
             inputMethodManagerHide.hideSoftInputFromWindow(view.getWindowToken(), 0);
         });
 
         binding.qcTagIcon.setOnClickListener(view -> {
-            binding.qcTagIcon.startAnimation(animation);
+            view.startAnimation(animation);
             if (thisQuote.getUid() != -1) {
                 updateQuote();
                 Bundle transfer = new Bundle();
@@ -171,12 +192,12 @@ public class QuoteCreateFragment extends Fragment {
                 Log.i("ID", String.valueOf(thisQuote.getUid()));
                 Navigation.findNavController(view).navigate(R.id.action_quoteCreateFragment_to_tagSelectionFragment, transfer);
             } else {
-                createSnackbar(R.string.qc_add_quote_request);
+                CustomSnackBar.createSnackbar(view, activity, R.string.qc_add_quote_request);
             }
         });
 
         binding.qcBookmarkIcon.setOnClickListener(view -> {
-            binding.qcBookmarkIcon.startAnimation(animation);
+            view.startAnimation(animation);
             if (thisQuote.getUid() != -1) {
                 updateQuote();
                 if (thisQuote.getBookmarkFlag() == 0) {
@@ -189,20 +210,21 @@ public class QuoteCreateFragment extends Fragment {
                     quoteViewModel.update(thisQuote);
                 }
             } else {
-                createSnackbar(R.string.qc_add_quote_request);
+                CustomSnackBar.createSnackbar(view, activity, R.string.qc_add_quote_request);
             }
         });
 
         binding.qcBasketIcon.setOnClickListener(view -> {
-            binding.qcBasketIcon.startAnimation(animation);
+            view.startAnimation(animation);
             if (thisQuote.getUid() != -1) {
                 updateQuote();
                 thisQuote.setRemovedFlag(1);
+                thisQuote.setRemovedDate(Calendar.getInstance().getTimeInMillis());
                 quoteViewModel.update(thisQuote);
                 createUndoSnackbar();
                 Navigation.findNavController(view).navigateUp();
             } else {
-                createSnackbar(R.string.qc_add_quote_request);
+                CustomSnackBar.createSnackbar(view, activity, R.string.qc_add_quote_request);
             }
         });
     }
@@ -225,27 +247,8 @@ public class QuoteCreateFragment extends Fragment {
         thisQuote.setTitle(binding.qcTitleEt.getText().toString().trim());
         thisQuote.setAuthor(binding.qcAuthorEt.getText().toString().trim());
         thisQuote.setText(binding.qcTextEt.getText().toString().trim());
-        thisQuote.setDate(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        thisQuote.setDate(Calendar.getInstance().getTimeInMillis());
         thisQuote.setPageNumber(binding.qcPageNumberEt.getText().toString().trim());
-    }
-
-    private void createSnackbar(int id) {
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-                FrameLayout.LayoutParams.WRAP_CONTENT,
-                FrameLayout.LayoutParams.WRAP_CONTENT
-        );
-        params.gravity = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
-        params.topMargin = 15;
-        Snackbar snackbar = Snackbar.make(getView(), "", Snackbar.LENGTH_SHORT);
-        snackbar.getView().setLayoutParams(params);
-        LayoutInflater inflater = LayoutInflater.from(getContext());
-        View customView = inflater.inflate(R.layout.show_snackbar, null);
-        TextView message = customView.findViewById(R.id.ss_text);
-        message.setText(getString(id));
-        snackbar.getView().setBackgroundResource(R.drawable.empty_drawable);
-        Snackbar.SnackbarLayout snackbarLayout = (Snackbar.SnackbarLayout) snackbar.getView();
-        snackbarLayout.addView(customView, 0);
-        snackbar.show();
     }
 
     private void createUndoSnackbar() {
@@ -255,8 +258,11 @@ public class QuoteCreateFragment extends Fragment {
         TextView message = customView.findViewById(R.id.sus_text);
         message.setText(getString(R.string.sus_quote_remove_text));
         Button undoButton = customView.findViewById(R.id.sus_undo_text);
+        Animation animation = AnimationUtils.loadAnimation(activity, R.anim.image_scale);
         undoButton.setOnClickListener(view -> {
+            view.startAnimation(animation);
             thisQuote.setRemovedFlag(0);
+            thisQuote.setRemovedDate(0);
             quoteViewModel.update(thisQuote);
             undoButton.setOnClickListener(null);
         });
@@ -265,4 +271,6 @@ public class QuoteCreateFragment extends Fragment {
         snackbarLayout.addView(customView, 0);
         snackbar.show();
     }
+
+
 }

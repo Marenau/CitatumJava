@@ -18,5 +18,5 @@
         android:id="@+id/registerFragment"
         android:name="com.corylab.citatum.presentation.fragment.RegisterFragment"
         android:label="RegisterFragment"
-        tools:layout="@layout/fragment_register"/>
+        tools:layout="@layout/fragment_register" />
 </navigation>

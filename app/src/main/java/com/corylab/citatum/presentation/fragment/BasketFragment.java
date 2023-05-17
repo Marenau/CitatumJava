@@ -77,14 +77,18 @@ public class BasketFragment extends Fragment {
         init();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
     private void init() {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(activity, RecyclerView.VERTICAL, false);
         binding.bfRv.setLayoutManager(layoutManager);
         DeleteQuoteAdapter quoteAdapter = new DeleteQuoteAdapter(this);
         binding.bfRv.setAdapter(quoteAdapter);
-        quoteViewModel.getRemovedQuotes().observe(getViewLifecycleOwner(), quotes -> {
-            quoteAdapter.submitList(quotes);
-        });
+        quoteViewModel.getRemovedQuotes().observe(getViewLifecycleOwner(), quoteAdapter::submitList);
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
             @Override
@@ -108,6 +112,7 @@ public class BasketFragment extends Fragment {
                     createUndoSnackbar(getView(), quote);
                 } else if (direction == ItemTouchHelper.RIGHT) {
                     quote.setRemovedFlag(0);
+                    quote.setRemovedDate(0);
                     quoteViewModel.update(quote);
                     CustomSnackBar.createSnackbar(getView(), activity, R.string.qc_quotes_update);
                 }
@@ -119,15 +124,15 @@ public class BasketFragment extends Fragment {
                 float alpha = 1.0f - Math.abs(dX) / itemView.getWidth();
                 Paint paint = new Paint();
                 if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+                    float cornerRadius = 20f;
                     if (dX > 0) {
-                        paint.setColor(ContextCompat.getColor(activity, R.color.light_blue));
-                        paint.setAlpha((int) (alpha * 255));
-                        float cornerRadius = 20f;
+                        int color = ContextCompat.getColor(activity, R.color.light_blue);
+                        Drawable drawableIcon = ContextCompat.getDrawable(activity, R.drawable.icon_return_bt);
                         RectF rect = new RectF(itemView.getLeft(), itemView.getTop(), dX + itemView.getRight() / 2, itemView.getBottom());
+                        paint.setColor(color);
+                        paint.setAlpha((int) (alpha * 255));
                         c.drawRoundRect(rect, cornerRadius, cornerRadius, paint);
-
-                        Drawable returnIcon = ContextCompat.getDrawable(activity, R.drawable.icon_return_bt);
-                        Drawable.ConstantState constantState = returnIcon.mutate().getConstantState();
+                        Drawable.ConstantState constantState = drawableIcon.mutate().getConstantState();
                         Drawable drawableCopy = constantState.newDrawable();
                         drawableCopy.setTint(ContextCompat.getColor(activity, R.color.background_color));
                         int iconWidth = drawableCopy.getIntrinsicWidth();
@@ -139,16 +144,14 @@ public class BasketFragment extends Fragment {
                         int iconBottom = iconTop + iconHeight;
                         drawableCopy.setBounds(iconLeft, iconTop, iconRight, iconBottom);
                         drawableCopy.draw(c);
-
                     } else if (dX < 0) {
-                        paint.setColor(ContextCompat.getColor(activity, R.color.light_red));
-                        paint.setAlpha((int) (alpha * 255));
-                        float cornerRadius = 20f;
+                        int color = ContextCompat.getColor(activity, R.color.light_red);
+                        Drawable drawableIcon = ContextCompat.getDrawable(activity, R.drawable.icon_basket);
                         RectF rect = new RectF(itemView.getRight() - itemView.getRight() / 2 + dX, itemView.getTop(), itemView.getRight(), itemView.getBottom());
+                        paint.setColor(color);
+                        paint.setAlpha((int) (alpha * 255));
                         c.drawRoundRect(rect, cornerRadius, cornerRadius, paint);
-
-                        Drawable basketIcon = ContextCompat.getDrawable(activity, R.drawable.icon_basket);
-                        Drawable.ConstantState constantState = basketIcon.mutate().getConstantState();
+                        Drawable.ConstantState constantState = drawableIcon.mutate().getConstantState();
                         Drawable drawableCopy = constantState.newDrawable();
                         drawableCopy.setTint(ContextCompat.getColor(activity, R.color.background_color));
                         int iconWidth = drawableCopy.getIntrinsicWidth();
@@ -160,7 +163,6 @@ public class BasketFragment extends Fragment {
                         int iconBottom = iconTop + iconHeight;
                         drawableCopy.setBounds(iconLeft, iconTop, iconRight, iconBottom);
                         drawableCopy.draw(c);
-
                     }
                 }
                 super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);

@@ -42,4 +42,7 @@ public interface QuoteDao {
 
     @Query("SELECT * FROM quotes_table WHERE remove_flag = 1")
     LiveData<List<EntityQuote>> geRemovedQuotes();
+
+    @Query("DELETE FROM quotes_table WHERE remove_flag = 1 AND remove_date <= :outdatedTimestamp")
+    void removeOutdatedQuotes(long outdatedTimestamp);
 }

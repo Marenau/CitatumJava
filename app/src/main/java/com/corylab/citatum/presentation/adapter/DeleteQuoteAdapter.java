@@ -21,8 +21,8 @@ import java.text.DateFormat;
 
 public class DeleteQuoteAdapter extends ListAdapter<Quote, DeleteQuoteAdapter.DeleteQuoteViewHolder> {
 
-    private Fragment fragment;
-    private QuoteTagJoinViewModel quoteTagJoinViewModel;
+    private final Fragment fragment;
+    private final QuoteTagJoinViewModel quoteTagJoinViewModel;
 
     private static final DiffUtil.ItemCallback<Quote> DIFF_CALLBACK = new DiffUtil.ItemCallback<Quote>() {
         @Override
@@ -67,16 +67,15 @@ public class DeleteQuoteAdapter extends ListAdapter<Quote, DeleteQuoteAdapter.De
     public void onBindViewHolder(@NonNull DeleteQuoteViewHolder holder, int position) {
         Quote quote = getItem(position);
         holder.quoteText.setText(quote.getText());
-        holder.authorTitleText.setText("© " + quote.getAuthor() + ", " + quote.getTitle());
+        String authorTitleText = "© " + quote.getAuthor() + ", " + quote.getTitle();
+        holder.authorTitleText.setText(authorTitleText);
         holder.dataText.setText(DateFormat.getDateInstance(DateFormat.SHORT).format(quote.getDate()));
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(fragment.getContext(), RecyclerView.HORIZONTAL, false);
         holder.tagsRv.setLayoutManager(layoutManager);
         QuoteTagAdapter adapter = new QuoteTagAdapter();
         holder.tagsRv.setAdapter(adapter);
-        quoteTagJoinViewModel.getTagsForQuote(quote.getUid()).observe(fragment.getViewLifecycleOwner(), tags -> {
-            adapter.submitList(tags);
-        });
+        quoteTagJoinViewModel.getTagsForQuote(quote.getUid()).observe(fragment.getViewLifecycleOwner(), adapter::submitList);
     }
 
     public Quote getQuoteAtPosition(int position) {

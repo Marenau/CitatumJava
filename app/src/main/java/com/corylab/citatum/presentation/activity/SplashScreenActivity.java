@@ -1,11 +1,13 @@
 package com.corylab.citatum.presentation.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -29,6 +31,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+@SuppressLint("CustomSplashScreen")
 public class SplashScreenActivity extends AppCompatActivity {
 
     @Override
@@ -59,33 +62,33 @@ public class SplashScreenActivity extends AppCompatActivity {
                     Call<ForismaticQuote> call = forismaticApi.getQuote("getQuote", "json", null, "ru");
                     call.enqueue(new Callback<ForismaticQuote>() {
                         @Override
-                        public void onResponse(Call<ForismaticQuote> call, Response<ForismaticQuote> response) {
+                        public void onResponse(@NonNull Call<ForismaticQuote> call, @NonNull Response<ForismaticQuote> response) {
                             if (response.isSuccessful()) {
                                 ForismaticQuote forismaticResponse = response.body();
-                                sharedPreferencesViewModel.setString("quote_text", forismaticResponse.getQuoteText());
-                                sharedPreferencesViewModel.setString("quote_author", forismaticResponse.getQuoteAuthor());
-                                sharedPreferencesViewModel.setLong("last_request_timestamp", currentTimestamp);
-                            } else {
+                                if (forismaticResponse != null) {
+                                    sharedPreferencesViewModel.setString("quote_text", forismaticResponse.getQuoteText());
+                                    sharedPreferencesViewModel.setString("quote_author", forismaticResponse.getQuoteAuthor());
+                                    sharedPreferencesViewModel.setLong("last_request_timestamp", currentTimestamp);
+                                }
                             }
                         }
 
                         @Override
-                        public void onFailure(Call<ForismaticQuote> call, Throwable t) {
+                        public void onFailure(@NonNull Call<ForismaticQuote> call, @NonNull Throwable t) {
                         }
                     });
                 });
             }
 
             FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+            Intent intent;
             if (currentUser != null) {
-                Intent intent = new Intent(this, MainActivity.class);
-                this.startActivity(intent);
-                this.finish();
+                intent = new Intent(this, MainActivity.class);
             } else {
-                Intent intent = new Intent(this, LoginActivity.class);
-                this.startActivity(intent);
-                this.finish();
+                intent = new Intent(this, LoginActivity.class);
             }
+            this.startActivity(intent);
+            this.finish();
 
             quoteViewModel.removeOutdatedQuotes();
         }, 1000);

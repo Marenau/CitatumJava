@@ -8,12 +8,12 @@ public class Quote {
     private String author;
     private String text;
     private long date;
-    private String pageNumber;
+    private int pageNumber;
     private int bookmarkFlag;
     private int removedFlag;
     private long removedDate;
 
-    public Quote(int uid, String title, String author, String text, long date, String pageNumber, int bookmarkFlag, int removedFlag, long removedDate) {
+    public Quote(int uid, String title, String author, String text, long date, int pageNumber, int bookmarkFlag, int removedFlag, long removedDate) {
         this.uid = uid;
         this.title = title;
         this.author = author;
@@ -25,7 +25,7 @@ public class Quote {
         this.removedDate = removedDate;
     }
 
-    public Quote(String title, String author, String text, long date, String pageNumber) {
+    public Quote(String title, String author, String text, long date, int pageNumber) {
         this.title = title;
         this.author = author;
         this.text = text;
@@ -110,11 +110,11 @@ public class Quote {
         this.date = date;
     }
 
-    public String getPageNumber() {
+    public int getPageNumber() {
         return pageNumber;
     }
 
-    public void setPageNumber(String pageNumber) {
+    public void setPageNumber(int pageNumber) {
         this.pageNumber = pageNumber;
     }
 

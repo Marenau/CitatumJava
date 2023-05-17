@@ -22,8 +22,11 @@ import com.corylab.citatum.presentation.viewmodel.SharedPreferencesViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class SettingsFragment extends Fragment {
 
@@ -72,13 +75,23 @@ public class SettingsFragment extends Fragment {
         init();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
     private void init() {
         binding.sfUsernameText.setText(sharedPreferencesViewModel.getString("username", "Oops!"));
         FirebaseUser user = auth.getCurrentUser();
         binding.sfEmailText.setText(user.getEmail());
+
         long creationDate = user.getMetadata().getCreationTimestamp();
-        String formattedDate = new SimpleDateFormat("MM/yyyy").format(new Date(creationDate));
-        binding.sfDateText.setText(getString(R.string.sf_date_text) + " " + formattedDate);
+        Instant instant = Instant.ofEpochMilli(creationDate);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/yyyy", Locale.getDefault());
+        String formattedDate = formatter.format(ZonedDateTime.ofInstant(instant, ZoneId.systemDefault()));
+        String sfDateText = getString(R.string.sf_date_text) + " " + formattedDate;
+        binding.sfDateText.setText(sfDateText);
 
         binding.sfQuitBtn.setOnClickListener(view -> {
             auth.signOut();

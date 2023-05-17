@@ -20,15 +20,11 @@ import com.corylab.citatum.data.model.Quote;
 import com.corylab.citatum.presentation.viewmodel.QuoteTagJoinViewModel;
 
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 public class QuoteAdapter extends ListAdapter<Quote, QuoteAdapter.QuoteViewHolder> {
 
-    private Fragment fragment;
-    private QuoteTagJoinViewModel quoteTagJoinViewModel;
+    private final Fragment fragment;
+    private final QuoteTagJoinViewModel quoteTagJoinViewModel;
 
     private static final DiffUtil.ItemCallback<Quote> DIFF_CALLBACK = new DiffUtil.ItemCallback<Quote>() {
         @Override
@@ -73,7 +69,8 @@ public class QuoteAdapter extends ListAdapter<Quote, QuoteAdapter.QuoteViewHolde
     public void onBindViewHolder(@NonNull QuoteViewHolder holder, int position) {
         Quote quote = getItem(position);
         holder.quoteText.setText(quote.getText());
-        holder.authorTitleText.setText("© " + quote.getAuthor() + ", " + quote.getTitle());
+        String authorTitleText = "© " + quote.getAuthor() + ", " + quote.getTitle();
+        holder.authorTitleText.setText(authorTitleText);
         holder.dataText.setText(DateFormat.getDateInstance(DateFormat.SHORT).format(quote.getDate()));
         holder.itemView.setOnClickListener(view -> {
             Bundle transfer = new Bundle();
@@ -85,9 +82,7 @@ public class QuoteAdapter extends ListAdapter<Quote, QuoteAdapter.QuoteViewHolde
         holder.tagsRv.setLayoutManager(layoutManager);
         QuoteTagAdapter adapter = new QuoteTagAdapter();
         holder.tagsRv.setAdapter(adapter);
-        quoteTagJoinViewModel.getTagsForQuote(quote.getUid()).observe(fragment.getViewLifecycleOwner(), tags -> {
-            adapter.submitList(tags);
-        });
+        quoteTagJoinViewModel.getTagsForQuote(quote.getUid()).observe(fragment.getViewLifecycleOwner(), adapter::submitList);
     }
 
     public Quote getQuoteAtPosition(int position) {

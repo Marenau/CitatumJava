@@ -20,7 +20,7 @@ public class EntityQuote {
     @ColumnInfo(name = "date")
     public long date;
     @ColumnInfo(name = "page_number")
-    public String pageNumber;
+    public int pageNumber;
     @ColumnInfo(name = "bookmark_flag")
     public int bookmarkFlag;
     @ColumnInfo(name = "remove_flag")
@@ -28,7 +28,7 @@ public class EntityQuote {
     @ColumnInfo(name = "remove_date")
     public long removeDate;
 
-    public EntityQuote(String title, String author, String text, long date, String pageNumber, int bookmarkFlag, int removeFlag) {
+    public EntityQuote(String title, String author, String text, long date, int pageNumber, int bookmarkFlag, int removeFlag) {
         this.title = title;
         this.author = author;
         this.text = text;

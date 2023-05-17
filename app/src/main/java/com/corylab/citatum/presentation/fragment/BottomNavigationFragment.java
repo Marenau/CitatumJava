@@ -48,6 +48,12 @@ public class BottomNavigationFragment extends Fragment {
         init();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
     private void init() {
         View navigationContainerView = activity.findViewById(R.id.nav_container_view);
         binding.bnButton.setOnClickListener(view -> {

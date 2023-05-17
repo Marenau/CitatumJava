@@ -11,7 +11,8 @@ import com.corylab.citatum.data.repository.TagRepository;
 import java.util.List;
 
 public class TagViewModel extends AndroidViewModel {
-    private TagRepository repository;
+
+    private final TagRepository repository;
     private final LiveData<List<Tag>> tags;
 
     public TagViewModel(Application application) {

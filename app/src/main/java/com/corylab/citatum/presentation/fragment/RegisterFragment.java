@@ -69,6 +69,12 @@ public class RegisterFragment extends Fragment {
         init();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
     private void init() {
         Animation animation = AnimationUtils.loadAnimation(activity, R.anim.image_scale);
 
@@ -137,12 +143,12 @@ public class RegisterFragment extends Fragment {
     }
 
     private boolean isValidNickname(String nickname) {
-        String regex = "^[a-zA-Z0-9_-]{1,20}$";
+        String regex = "^[a-zA-Z\\d_-]{1,20}$";
         return nickname.matches(regex);
     }
 
     private boolean isValidEmail(String email) {
-        String regex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+        String regex = "^[A-Za-z\\d+_.-]+@[A-Za-z\\d.-]+$";
         return email.matches(regex);
     }
 

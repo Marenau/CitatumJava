@@ -16,8 +16,8 @@ import java.util.stream.Collectors;
 
 public class TagRepository {
 
-    private TagDao tagDao;
-    private LiveData<List<Tag>> tags;
+    private final TagDao tagDao;
+    private final LiveData<List<Tag>> tags;
 
     public TagRepository(Application application) {
         AppRoomDatabase db = AppRoomDatabase.getDatabase(application);

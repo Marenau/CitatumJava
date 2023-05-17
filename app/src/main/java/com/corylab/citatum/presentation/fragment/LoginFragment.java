@@ -85,6 +85,12 @@ public class LoginFragment extends Fragment {
         init();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
     private void init() {
         Animation animation = AnimationUtils.loadAnimation(activity, R.anim.image_scale);
         binding.lfRegisterCv.setOnClickListener(view -> {
@@ -120,9 +126,8 @@ public class LoginFragment extends Fragment {
             auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(activity, task -> {
                 if (task.isSuccessful()) {
                     FirebaseUser user = auth.getCurrentUser();
-
-                    DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");
                     String userId = user.getUid();
+                    DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");
                     usersRef.child(userId).child("username").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -133,11 +138,9 @@ public class LoginFragment extends Fragment {
                         public void onCancelled(@NonNull DatabaseError databaseError) {
                         }
                     });
-
                     Intent intent = new Intent(activity, MainActivity.class);
                     activity.startActivity(intent);
                     activity.finish();
-
                 } else showNotification(AccountStatus.INCORRECT);
             });
         } else showNotification(AccountStatus.INCORRECT);

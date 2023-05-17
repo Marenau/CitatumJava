@@ -15,10 +15,9 @@ import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 public class QuoteRepository {
-    private QuoteDao quoteDao;
 
-    private LiveData<List<Quote>> quotes;
-
+    private final QuoteDao quoteDao;
+    private final LiveData<List<Quote>> quotes;
 
     public QuoteRepository(Application application) {
         AppRoomDatabase quoteDB = AppRoomDatabase.getDatabase(application);
@@ -45,7 +44,7 @@ public class QuoteRepository {
 
     public int getQuoteMaxId() {
         try {
-            return AppRoomDatabase.databaseReadExecutor.submit(() -> quoteDao.getMaxId()).get();
+            return AppRoomDatabase.databaseReadExecutor.submit(quoteDao::getMaxId).get();
         } catch (ExecutionException | InterruptedException e) {
             return 0;
         }
@@ -67,6 +66,10 @@ public class QuoteRepository {
         return Transformations.map(quoteDao.getAllActive(), entities -> entities.stream().map(EntityQuote::toQuote).collect(Collectors.toList()));
     }
 
+    public void removeOutdatedQuotes(long outdatedTimestamp) {
+        AppRoomDatabase.databaseReadExecutor.execute(() -> quoteDao.removeOutdatedQuotes(outdatedTimestamp));
+    }
+
     public Quote getQuoteByUid(int uid) {
         try {
             EntityQuote temp = AppRoomDatabase.databaseReadExecutor.submit(() -> quoteDao.getQuoteById(uid)).get();
@@ -79,6 +82,7 @@ public class QuoteRepository {
     private EntityQuote toQuoteEntity(Quote quote) {
         EntityQuote temp = new EntityQuote(quote.getTitle(), quote.getAuthor(), quote.getText(), quote.getDate(), quote.getPageNumber(), quote.getBookmarkFlag(), quote.getRemovedFlag());
         temp.uid = quote.getUid();
+        temp.removeDate = quote.getRemovedDate();
         return temp;
     }
 }

@@ -11,7 +11,6 @@ import com.corylab.citatum.data.repository.QuoteRepository;
 import com.google.firebase.database.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 public class QuoteViewModel extends AndroidViewModel {
@@ -71,6 +70,9 @@ public class QuoteViewModel extends AndroidViewModel {
         return repository.getAllActive();
     }
 
+    public void removeOutdatedQuotes() {
+        repository.removeOutdatedQuotes(System.currentTimeMillis() - (30L * 24 * 60 * 60 * 1000));
+    }
 
     public void filterData(String query) {
         query = query.trim().toLowerCase();
@@ -86,19 +88,5 @@ public class QuoteViewModel extends AndroidViewModel {
 
     public LiveData<List<Quote>> getFilterQuotes() {
         return filterQuotes;
-    }
-
-    public void removeOutdatedQuotes() {
-        List<Quote> quotes = getRemovedQuotes().getValue();
-        if (quotes != null) {
-            for (Quote q : quotes) {
-                Calendar calendar = Calendar.getInstance();
-                long currentTimestamp = calendar.getTimeInMillis();
-                long lastRequestTimestamp = q.getRemovedDate();
-                if (lastRequestTimestamp != 0 && currentTimestamp - lastRequestTimestamp > 30L * 24 * 60 * 60 * 1000) {
-                    delete(q);
-                }
-            }
-        }
     }
 }

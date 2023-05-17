@@ -66,7 +66,7 @@ public class TagAdapter extends ListAdapter<Tag, TagAdapter.TagViewHolder> {
             Animation animation = AnimationUtils.loadAnimation(view.getContext(), R.anim.image_scale);
             view.startAnimation(animation);
             Bundle transfer = new Bundle();
-            transfer.putInt( "uid", tag.getUid());
+            transfer.putInt("uid", tag.getUid());
             Navigation.findNavController(view).navigate(R.id.tagFragment, transfer);
         });
     }

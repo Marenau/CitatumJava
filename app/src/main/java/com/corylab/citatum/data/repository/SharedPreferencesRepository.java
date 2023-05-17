@@ -6,7 +6,7 @@ import com.corylab.citatum.data.datasource.SharedPreferencesSource;
 
 public class SharedPreferencesRepository {
 
-    private SharedPreferencesSource sharedPreferencesSource;
+    private final SharedPreferencesSource sharedPreferencesSource;
 
     public SharedPreferencesRepository(Application application) {
         sharedPreferencesSource = new SharedPreferencesSource(application);

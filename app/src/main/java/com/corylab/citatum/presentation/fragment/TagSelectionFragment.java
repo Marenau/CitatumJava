@@ -14,7 +14,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -77,6 +76,12 @@ public class TagSelectionFragment extends Fragment {
         init();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
     private void init() {
         final int[] uid = {-1};
         Bundle trBundle = getArguments();
@@ -87,13 +92,13 @@ public class TagSelectionFragment extends Fragment {
         binding.stfChbRv.setLayoutManager(layoutManager);
         SelectTagAdapter tagAdapter = new SelectTagAdapter();
         binding.stfChbRv.setAdapter(tagAdapter);
-        tagViewModel.getTags().observe(getViewLifecycleOwner(), tags -> tagAdapter.submitList(tags));
+        tagViewModel.getTags().observe(getViewLifecycleOwner(), tagAdapter::submitList);
 
         RecyclerView.LayoutManager layoutManager2 = new LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false);
         binding.stfCurrentTagsRv.setLayoutManager(layoutManager2);
         QuoteTagAdapter tagAdapter2 = new QuoteTagAdapter();
         binding.stfCurrentTagsRv.setAdapter(tagAdapter2);
-        quoteTagJoinViewModel.getTagsForQuote(uid[0]).observe(getViewLifecycleOwner(), tags -> tagAdapter2.submitList(tags));
+        quoteTagJoinViewModel.getTagsForQuote(uid[0]).observe(getViewLifecycleOwner(), tagAdapter2::submitList);
 
         Animation animation = AnimationUtils.loadAnimation(activity, R.anim.image_scale);
 

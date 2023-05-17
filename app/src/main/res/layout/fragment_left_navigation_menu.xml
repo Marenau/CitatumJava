@@ -40,6 +40,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="16dp"
+            android:clickable="false"
+            android:contentDescription="@string/cd_division_rectangle"
             android:src="@drawable/division_rectangle"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -65,6 +67,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="16dp"
+            android:clickable="false"
+            android:contentDescription="@string/cd_division_rectangle"
             android:src="@drawable/division_rectangle"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -146,6 +150,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="16dp"
+            android:clickable="false"
+            android:contentDescription="@string/cd_division_rectangle"
             android:src="@drawable/division_rectangle"
             app:layout_constraintStart_toStartOf="parent" />
 

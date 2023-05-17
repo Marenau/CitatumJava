@@ -70,8 +70,13 @@ public class TagCreateFragment extends Fragment {
         init();
     }
 
-    private void init() {
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
 
+    private void init() {
         final int[] uid = {-1};
         Bundle trBundle = getArguments();
         if (trBundle != null) {
@@ -87,11 +92,10 @@ public class TagCreateFragment extends Fragment {
         }
 
         Animation animation = AnimationUtils.loadAnimation(activity, R.anim.image_scale);
-
         binding.tcfConfirmIcon.setOnClickListener(view -> {
             view.startAnimation(animation);
             if (uid[0] == -1) {
-                tagViewModel.insert(new Tag(binding.tcfNameEt.getText().toString()));
+                tagViewModel.insert(new Tag(binding.tcfNameEt.getText().toString().isEmpty() ? getString(R.string.tc_autosubstitution_name_text) : binding.tcfNameEt.getText().toString()));
                 Navigation.findNavController(view).navigateUp();
                 createSnackbar(R.string.tc_tag_added);
             } else {

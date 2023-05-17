@@ -9,7 +9,7 @@ import com.corylab.citatum.data.repository.SharedPreferencesRepository;
 
 public class SharedPreferencesViewModel extends AndroidViewModel {
 
-    private SharedPreferencesRepository repository;
+    private final SharedPreferencesRepository repository;
 
     public SharedPreferencesViewModel(@NonNull Application application) {
         super(application);

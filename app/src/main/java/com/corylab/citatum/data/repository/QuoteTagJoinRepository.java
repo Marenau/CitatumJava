@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 public class QuoteTagJoinRepository {
 
-    private QuoteTagJoinDao quoteTagJoinDao;
+    private final QuoteTagJoinDao quoteTagJoinDao;
 
     public QuoteTagJoinRepository(Application application) {
         AppRoomDatabase db = AppRoomDatabase.getDatabase(application);

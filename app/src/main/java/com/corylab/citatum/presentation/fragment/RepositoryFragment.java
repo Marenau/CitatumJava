@@ -74,14 +74,18 @@ public class RepositoryFragment extends Fragment {
         init();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
     private void init() {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(activity, RecyclerView.VERTICAL, false);
         binding.rfRecyclerView.setLayoutManager(layoutManager);
         QuoteAdapter quoteAdapter = new QuoteAdapter(this);
         binding.rfRecyclerView.setAdapter(quoteAdapter);
-        quoteViewModel.getAllActive().observe(getViewLifecycleOwner(), quotes -> {
-            quoteAdapter.submitList(quotes);
-        });
+        quoteViewModel.getAllActive().observe(getViewLifecycleOwner(), quoteAdapter::submitList);
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
             @Override

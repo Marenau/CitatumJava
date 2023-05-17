@@ -18,7 +18,7 @@ import java.util.List;
 
 public class SelectTagAdapter extends ListAdapter<Tag, SelectTagAdapter.SelectTagViewHolder> {
 
-    private List<Tag> chosenList = new ArrayList<>();
+    private final List<Tag> chosenList = new ArrayList<>();
 
     private static final DiffUtil.ItemCallback<Tag> DIFF_CALLBACK = new DiffUtil.ItemCallback<Tag>() {
         @Override
@@ -71,8 +71,7 @@ public class SelectTagAdapter extends ListAdapter<Tag, SelectTagAdapter.SelectTa
     }
 
     public List<Tag> getUnchosenList() {
-        List<Tag> temp = new ArrayList<>();
-        temp.addAll(getCurrentList());
+        List<Tag> temp = new ArrayList<>(getCurrentList());
         temp.removeAll(chosenList);
         return temp;
     }

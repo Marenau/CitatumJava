@@ -67,14 +67,18 @@ public class SearchFragment extends Fragment {
         init();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
     private void init() {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(activity, RecyclerView.VERTICAL, false);
         binding.srfRv.setLayoutManager(layoutManager);
         QuoteAdapter quoteAdapter = new QuoteAdapter(this);
         binding.srfRv.setAdapter(quoteAdapter);
-        quoteViewModel.getFilterQuotes().observe(getViewLifecycleOwner(), quotes -> {
-            quoteAdapter.submitList(quotes);
-        });
+        quoteViewModel.getFilterQuotes().observe(getViewLifecycleOwner(), quoteAdapter::submitList);
 
         binding.srfSv.setOnClickListener(v -> binding.srfSv.onActionViewExpanded());
 

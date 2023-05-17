@@ -22,19 +22,17 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.corylab.citatum.presentation.SmoothScrollRunnable;
-import com.corylab.citatum.presentation.snackbar.CustomSnackBar;
 import com.corylab.citatum.R;
 import com.corylab.citatum.data.model.Quote;
 import com.corylab.citatum.databinding.FragmentQuoteCreateBinding;
+import com.corylab.citatum.presentation.activity.MainActivity;
 import com.corylab.citatum.presentation.adapter.QuoteTagAdapter;
+import com.corylab.citatum.presentation.snackbar.CustomSnackBar;
+import com.corylab.citatum.presentation.stream.SmoothScrollRunnable;
 import com.corylab.citatum.presentation.viewmodel.QuoteTagJoinViewModel;
 import com.corylab.citatum.presentation.viewmodel.QuoteViewModel;
-import com.corylab.citatum.presentation.activity.MainActivity;
 import com.google.android.material.snackbar.Snackbar;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 
 public class QuoteCreateFragment extends Fragment {
@@ -65,7 +63,7 @@ public class QuoteCreateFragment extends Fragment {
         outState.putString("author", thisQuote.getAuthor());
         outState.putString("text", thisQuote.getText());
         outState.putLong("date", thisQuote.getDate());
-        outState.putString("page_number", thisQuote.getPageNumber());
+        outState.putInt("page_number", thisQuote.getPageNumber());
         outState.putInt("bookmark_flag", thisQuote.getBookmarkFlag());
         outState.putInt("remove_flag", thisQuote.getRemovedFlag());
     }
@@ -90,7 +88,7 @@ public class QuoteCreateFragment extends Fragment {
             thisQuote.setAuthor(savedInstanceState.getString("author"));
             thisQuote.setText(savedInstanceState.getString("text"));
             thisQuote.setDate(savedInstanceState.getLong("date"));
-            thisQuote.setPageNumber(savedInstanceState.getString("page_number"));
+            thisQuote.setPageNumber(savedInstanceState.getInt("page_number"));
             thisQuote.setBookmarkFlag(savedInstanceState.getInt("bookmark_flag"));
             thisQuote.setRemovedFlag(savedInstanceState.getInt("remove_flag"));
         }
@@ -110,6 +108,12 @@ public class QuoteCreateFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         init();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 
     @Override
@@ -146,7 +150,7 @@ public class QuoteCreateFragment extends Fragment {
         binding.qcTitleEt.setText(thisQuote.getTitle());
         binding.qcAuthorEt.setText(thisQuote.getAuthor());
         binding.qcTextEt.setText(thisQuote.getText());
-        binding.qcPageNumberEt.setText(thisQuote.getPageNumber());
+        binding.qcPageNumberEt.setText(thisQuote.getPageNumber() == 0 ? "" : String.valueOf(thisQuote.getPageNumber()));
         if (thisQuote.getBookmarkFlag() == 1) {
             setBookmarkColor(R.color.light_red);
         }
@@ -248,7 +252,7 @@ public class QuoteCreateFragment extends Fragment {
         thisQuote.setAuthor(binding.qcAuthorEt.getText().toString().trim());
         thisQuote.setText(binding.qcTextEt.getText().toString().trim());
         thisQuote.setDate(Calendar.getInstance().getTimeInMillis());
-        thisQuote.setPageNumber(binding.qcPageNumberEt.getText().toString().trim());
+        thisQuote.setPageNumber(Integer.parseInt(binding.qcPageNumberEt.getText().toString()));
     }
 
     private void createUndoSnackbar() {
@@ -271,6 +275,4 @@ public class QuoteCreateFragment extends Fragment {
         snackbarLayout.addView(customView, 0);
         snackbar.show();
     }
-
-
 }

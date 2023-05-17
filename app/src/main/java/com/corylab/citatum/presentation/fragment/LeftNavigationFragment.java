@@ -49,40 +49,25 @@ public class LeftNavigationFragment extends Fragment {
         init();
     }
 
-    private void init() {
-        Animation animation = AnimationUtils.loadAnimation(activity, R.anim.image_scale);
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
 
-        binding.lmSettingsTv.setOnClickListener(view -> {
-            view.startAnimation(animation);
-            navigate(R.id.settingsFragment);
-        });
-        binding.lmPencilTv.setOnClickListener(view -> {
-            view.startAnimation(animation);
-            navigate(R.id.quoteCreateFragment);
-        });
-        binding.lmHubTv.setOnClickListener(view -> {
-            view.startAnimation(animation);
-            navigate(R.id.hubFragment);
-        });
-        binding.lmRepositoryTv.setOnClickListener(view -> {
-            view.startAnimation(animation);
-            navigate(R.id.repositoryFragment);
-        });
-        binding.lmTagsTv.setOnClickListener(view -> {
-            view.startAnimation(animation);
-            navigate(R.id.tagsFragment);
-        });
-        binding.lmBookmarkTv.setOnClickListener(view -> {
-            view.startAnimation(animation);
-            navigate(R.id.bookmarksFragment);
-        });
-        binding.lmBasketTv.setOnClickListener(view -> {
-            view.startAnimation(animation);
-            navigate(R.id.basketFragment);
-        });
+    private void init() {
+        binding.lmSettingsTv.setOnClickListener(view -> navigate(view, R.id.settingsFragment));
+        binding.lmPencilTv.setOnClickListener(view -> navigate(view, R.id.quoteCreateFragment));
+        binding.lmHubTv.setOnClickListener(view -> navigate(view, R.id.hubFragment));
+        binding.lmRepositoryTv.setOnClickListener(view -> navigate(view, R.id.repositoryFragment));
+        binding.lmTagsTv.setOnClickListener(view -> navigate(view, R.id.tagsFragment));
+        binding.lmBookmarkTv.setOnClickListener(view -> navigate(view, R.id.bookmarksFragment));
+        binding.lmBasketTv.setOnClickListener(view -> navigate(view, R.id.basketFragment));
+
         binding.lmFeedbackTv.setOnClickListener(view -> {
             DrawerLayout drawer = activity.findViewById(R.id.ma_drawer);
             drawer.closeDrawer(GravityCompat.START);
+
             Intent emailIntent = new Intent(Intent.ACTION_SEND);
             emailIntent.setType("plain/text");
             emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{getString(R.string.email_address)});
@@ -94,7 +79,9 @@ public class LeftNavigationFragment extends Fragment {
         });
     }
 
-    private void navigate(int id) {
+    private void navigate(View view, int id) {
+        Animation animation = AnimationUtils.loadAnimation(activity, R.anim.image_scale);
+        view.startAnimation(animation);
         View navigationContainerView = activity.findViewById(R.id.nav_container_view);
         NavController navController = Navigation.findNavController(navigationContainerView);
         int currentDestination = navController.getCurrentDestination().getId();

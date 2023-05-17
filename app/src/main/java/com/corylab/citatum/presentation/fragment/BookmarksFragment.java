@@ -74,14 +74,18 @@ public class BookmarksFragment extends Fragment {
         init();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
     private void init() {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
         binding.bmfRv.setLayoutManager(layoutManager);
         QuoteAdapter quoteAdapter = new QuoteAdapter(this);
         binding.bmfRv.setAdapter(quoteAdapter);
-        quoteViewModel.getBookmarkedQuotes().observe(getViewLifecycleOwner(), quotes -> {
-            quoteAdapter.submitList(quotes);
-        });
+        quoteViewModel.getBookmarkedQuotes().observe(getViewLifecycleOwner(), quoteAdapter::submitList);
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
             @Override

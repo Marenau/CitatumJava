@@ -14,7 +14,7 @@ import java.util.List;
 
 public class QuoteTagJoinViewModel extends AndroidViewModel {
 
-    private QuoteTagJoinRepository repository;
+    private final QuoteTagJoinRepository repository;
 
     public QuoteTagJoinViewModel(Application application) {
         super(application);

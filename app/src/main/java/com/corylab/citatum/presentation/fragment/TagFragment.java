@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.corylab.citatum.R;
 import com.corylab.citatum.databinding.FragmentTagBinding;
-import com.corylab.citatum.presentation.activity.MainActivity;
 import com.corylab.citatum.presentation.adapter.QuoteAdapter;
 import com.corylab.citatum.presentation.viewmodel.QuoteTagJoinViewModel;
 import com.corylab.citatum.presentation.viewmodel.TagViewModel;
@@ -25,7 +24,6 @@ import com.corylab.citatum.presentation.viewmodel.TagViewModel;
 public class TagFragment extends Fragment {
 
     private FragmentTagBinding binding;
-    private MainActivity activity;
     private QuoteTagJoinViewModel quoteTagJoinViewModel;
     private TagViewModel tagViewModel;
 
@@ -35,7 +33,6 @@ public class TagFragment extends Fragment {
 
     @Override
     public void onAttach(@NonNull Context context) {
-        activity = (MainActivity) context;
         super.onAttach(context);
     }
 
@@ -69,6 +66,12 @@ public class TagFragment extends Fragment {
         init();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
     private void init() {
         Bundle trBundle = getArguments();
         int uid = trBundle.getInt("uid");
@@ -78,6 +81,6 @@ public class TagFragment extends Fragment {
         binding.tfRv.setLayoutManager(layoutManager);
         QuoteAdapter quoteAdapter = new QuoteAdapter(this);
         binding.tfRv.setAdapter(quoteAdapter);
-        quoteTagJoinViewModel.getQuotesForTag(uid).observe(getViewLifecycleOwner(), quotes -> quoteAdapter.submitList(quotes));
+        quoteTagJoinViewModel.getQuotesForTag(uid).observe(getViewLifecycleOwner(), quoteAdapter::submitList);
     }
 }

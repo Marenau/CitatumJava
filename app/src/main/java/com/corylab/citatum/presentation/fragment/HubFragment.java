@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,7 +25,8 @@ import com.corylab.citatum.presentation.viewmodel.QuoteViewModel;
 import com.corylab.citatum.presentation.viewmodel.SharedPreferencesViewModel;
 import com.corylab.citatum.presentation.viewmodel.TagViewModel;
 
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 
 public class HubFragment extends Fragment {
@@ -76,6 +78,12 @@ public class HubFragment extends Fragment {
         init();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
     private void init() {
         Calendar calendar = Calendar.getInstance();
         int timeOfDay = calendar.get(Calendar.HOUR_OF_DAY);
@@ -91,9 +99,9 @@ public class HubFragment extends Fragment {
         }
         binding.hfWelcomeText.setText(welcomeText);
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, d MMMM, yyyy");
-        dateFormat.setCalendar(calendar);
-        String formattedDate = dateFormat.format(calendar.getTime());
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("EEEE, d MMMM, yyyy");
+        LocalDate currentDate = LocalDate.now();
+        String formattedDate = dateFormatter.format(currentDate);
         formattedDate = formattedDate.substring(0, 1).toUpperCase() + formattedDate.substring(1);
         binding.hfDateText.setText(formattedDate);
 
@@ -106,12 +114,12 @@ public class HubFragment extends Fragment {
         binding.hfQuotesRv.setLayoutManager(quoteLayoutManager);
         QuoteAdapter quoteAdapter = new QuoteAdapter(this);
         binding.hfQuotesRv.setAdapter(quoteAdapter);
-        quoteViewModel.getThreeQuotes().observe(getViewLifecycleOwner(), quotes -> quoteAdapter.submitList(quotes));
+        quoteViewModel.getThreeQuotes().observe(getViewLifecycleOwner(), quoteAdapter::submitList);
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false);
         binding.hfTagsRv.setLayoutManager(layoutManager);
         TagAdapter tagAdapter = new TagAdapter(R.layout.base_tag_item);
         binding.hfTagsRv.setAdapter(tagAdapter);
-        tagViewModel.getTags().observe(getViewLifecycleOwner(), tags -> tagAdapter.submitList(tags));
+        tagViewModel.getTags().observe(getViewLifecycleOwner(), tagAdapter::submitList);
     }
 }

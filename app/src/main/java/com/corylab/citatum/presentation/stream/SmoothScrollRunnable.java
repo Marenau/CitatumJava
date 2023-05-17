@@ -1,11 +1,10 @@
-package com.corylab.citatum.presentation;
+package com.corylab.citatum.presentation.stream;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 public class SmoothScrollRunnable implements Runnable {
-    private RecyclerView recyclerView;
-    private int scrollAmount = 5;
-    private int delayMillis = 100;
+    private final RecyclerView recyclerView;
+    private final int delayMillis = 100;
     private boolean scrollToEnd = true;
 
     public SmoothScrollRunnable(RecyclerView recyclerView) {
@@ -14,6 +13,7 @@ public class SmoothScrollRunnable implements Runnable {
 
     @Override
     public void run() {
+        int scrollAmount = 5;
         if (scrollToEnd) {
             recyclerView.smoothScrollBy(scrollAmount, 0);
             if (!recyclerView.canScrollHorizontally(1)) {

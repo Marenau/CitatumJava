@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="32dp"
+        android:clickable="false"
         android:fontFamily="@font/gothampro_black"
         android:hyphenationFrequency="normal"
         android:text="@string/tgf_page_text"
@@ -24,6 +25,7 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="16dp"
+        android:contentDescription="@string/cd_icon_tag"
         app:layout_constraintBottom_toBottomOf="@+id/stf_confirm_icon"
         app:layout_constraintStart_toEndOf="@+id/stf_confirm_icon"
         app:layout_constraintTop_toTopOf="@+id/stf_confirm_icon"
@@ -35,6 +37,7 @@
         android:layout_height="40dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
+        android:contentDescription="@string/cd_icon_confirm"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/stf_page_name"
         app:srcCompat="@drawable/icon_confirm" />

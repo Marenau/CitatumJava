@@ -10,6 +10,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
+        android:clickable="false"
         android:fontFamily="@font/gothampro_black"
         android:hyphenationFrequency="normal"
         android:text="@string/tgf_page_text"
@@ -25,6 +26,8 @@
         android:layout_width="60dp"
         android:layout_height="138dp"
         android:layout_marginEnd="25dp"
+        android:clickable="false"
+        android:contentDescription="@string/cd_red_bookmark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/home_bookmark" />
@@ -35,6 +38,7 @@
         android:layout_height="40dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
+        android:contentDescription="@string/cd_icon_tag"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tgf_page_name"
         app:srcCompat="@drawable/icon_tag_plus" />

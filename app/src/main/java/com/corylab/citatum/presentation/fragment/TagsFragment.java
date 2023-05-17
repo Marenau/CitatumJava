@@ -77,14 +77,18 @@ public class TagsFragment extends Fragment {
         init();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
     private void init() {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
         binding.tgfRecyclerView.setLayoutManager(layoutManager);
         TagAdapter tagAdapter = new TagAdapter(R.layout.tag_item);
         binding.tgfRecyclerView.setAdapter(tagAdapter);
-        tagViewModel.getTags().observe(getViewLifecycleOwner(), tags -> {
-            tagAdapter.submitList(tags);
-        });
+        tagViewModel.getTags().observe(getViewLifecycleOwner(), tagAdapter::submitList);
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
             @Override
@@ -119,48 +123,34 @@ public class TagsFragment extends Fragment {
                 float alpha = 1.0f - Math.abs(dX) / itemView.getWidth();
                 Paint paint = new Paint();
                 if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+                    int color;
+                    Drawable drawableIcon;
+                    RectF rect;
+                    float cornerRadius = 20f;
                     if (dX > 0) {
-                        paint.setColor(ContextCompat.getColor(activity, R.color.light_blue));
-                        paint.setAlpha((int) (alpha * 255));
-                        float cornerRadius = 20f;
-                        RectF rect = new RectF(itemView.getLeft(), itemView.getTop(), dX + itemView.getRight() / 2, itemView.getBottom());
-                        c.drawRoundRect(rect, cornerRadius, cornerRadius, paint);
-
-                        Drawable bookmarkIcon = ContextCompat.getDrawable(activity, R.drawable.icon_pencil);
-                        Drawable.ConstantState constantState = bookmarkIcon.mutate().getConstantState();
-                        Drawable drawableCopy = constantState.newDrawable();
-                        drawableCopy.setTint(ContextCompat.getColor(activity, R.color.background_color));
-                        int iconWidth = (int) (drawableCopy.getIntrinsicWidth() / 1.5);
-                        int iconHeight = (int) (drawableCopy.getIntrinsicHeight() / 1.5);
-                        int iconTop = itemView.getTop() + (itemView.getHeight() - iconHeight) / 2;
-                        int iconMargin = (itemView.getHeight() - iconHeight) / 2;
-                        int iconLeft = itemView.getLeft() + iconMargin;
-                        int iconRight = itemView.getLeft() + iconMargin + iconWidth;
-                        int iconBottom = iconTop + iconHeight;
-                        drawableCopy.setBounds(iconLeft, iconTop, iconRight, iconBottom);
-                        drawableCopy.draw(c);
-
-                    } else if (dX < 0) {
-                        paint.setColor(ContextCompat.getColor(activity, R.color.light_red));
-                        paint.setAlpha((int) (alpha * 255));
-                        float cornerRadius = 20f;
-                        RectF rect = new RectF(itemView.getRight() - itemView.getRight() / 2 + dX, itemView.getTop(), itemView.getRight(), itemView.getBottom());
-                        c.drawRoundRect(rect, cornerRadius, cornerRadius, paint);
-
-                        Drawable basketIcon = ContextCompat.getDrawable(activity, R.drawable.icon_basket);
-                        Drawable.ConstantState constantState = basketIcon.mutate().getConstantState();
-                        Drawable drawableCopy = constantState.newDrawable();
-                        drawableCopy.setTint(ContextCompat.getColor(activity, R.color.background_color));
-                        int iconWidth = (int) (drawableCopy.getIntrinsicWidth() / 1.5);
-                        int iconHeight = (int) (drawableCopy.getIntrinsicHeight() / 1.5);
-                        int iconTop = itemView.getTop() + (itemView.getHeight() - iconHeight) / 2;
-                        int iconMargin = (itemView.getHeight() - iconHeight) / 2;
-                        int iconLeft = itemView.getRight() - iconMargin - iconWidth;
-                        int iconRight = itemView.getRight() - iconMargin;
-                        int iconBottom = iconTop + iconHeight;
-                        drawableCopy.setBounds(iconLeft, iconTop, iconRight, iconBottom);
-                        drawableCopy.draw(c);
+                        color = ContextCompat.getColor(activity, R.color.light_blue);
+                        drawableIcon = ContextCompat.getDrawable(activity, R.drawable.icon_pencil);
+                        rect = new RectF(itemView.getLeft(), itemView.getTop(), dX + itemView.getRight() / 2, itemView.getBottom());
+                    } else {
+                        color = ContextCompat.getColor(activity, R.color.light_red);
+                        drawableIcon = ContextCompat.getDrawable(activity, R.drawable.icon_basket);
+                        rect = new RectF(itemView.getRight() - itemView.getRight() / 2 + dX, itemView.getTop(), itemView.getRight(), itemView.getBottom());
                     }
+                    paint.setColor(color);
+                    paint.setAlpha((int) (alpha * 255));
+                    c.drawRoundRect(rect, cornerRadius, cornerRadius, paint);
+                    Drawable.ConstantState constantState = drawableIcon.mutate().getConstantState();
+                    Drawable drawableCopy = constantState.newDrawable();
+                    drawableCopy.setTint(ContextCompat.getColor(activity, R.color.background_color));
+                    int iconWidth = (int) (drawableCopy.getIntrinsicWidth() / 1.5);
+                    int iconHeight = (int) (drawableCopy.getIntrinsicHeight() / 1.5);
+                    int iconTop = itemView.getTop() + (itemView.getHeight() - iconHeight) / 2;
+                    int iconMargin = (itemView.getHeight() - iconHeight) / 2;
+                    int iconLeft = (dX > 0) ? itemView.getLeft() + iconMargin : itemView.getRight() - iconMargin - iconWidth;
+                    int iconRight = (dX > 0) ? itemView.getLeft() + iconMargin + iconWidth : itemView.getRight() - iconMargin;
+                    int iconBottom = iconTop + iconHeight;
+                    drawableCopy.setBounds(iconLeft, iconTop, iconRight, iconBottom);
+                    drawableCopy.draw(c);
                 }
                 super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
             }

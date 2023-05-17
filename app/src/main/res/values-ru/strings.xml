@@ -2,6 +2,7 @@
     <string name="app_name">Citatum</string>
 
     <string name="default_text">По умолчанию</string>
+    <string name="empty_recycler">Записи отсутсвуют</string>
 
     <!-- Элементы экранов регистрации и входа -->
     <string name="login_text">Вход</string>
@@ -81,6 +82,7 @@
     <string name="tc_tags_text">Вы можете добавить метку к цитате, это упростит поиск по вашему репозиторию.</string>
     <string name="tc_tag_added">Метка была успешно добавлена.</string>
     <string name="tc_tag_update">Метка была успешно обновлена.</string>
+    <string name="tc_autosubstitution_name_text">Без названия</string>
 
     <!-- Тексты уведомлений -->
     <string name="no_connection_title_text">Упс!</string>
@@ -116,4 +118,18 @@
     <string name="email_address">citatumcorylab@gmail.com</string>
     <string name="email_subject">Проблема</string>
     <string name="email_text">У меня возникла проблема с вашим приложением Citatum.</string>
+
+    <!-- Описание содержимого -->
+    <string name="cd_icon_launcher">Иконка приложения</string>
+    <string name="cd_red_bookmark">Изображение красной закладки</string>
+    <string name="cd_icon_info">Иконка информации</string>
+    <string name="cd_icon_menu">Иконка меню</string>
+    <string name="cd_icon_search">Иконка информации</string>
+    <string name="cd_division_rectangle">Разделительный прямоугольник</string>
+    <string name="cd_icon_entrance">Иконка входа</string>
+    <string name="cd_icon_confirm">Иконка подтверждения</string>
+    <string name="cd_icon_tag">Иконка метки</string>
+    <string name="cd_icon_bookmark">Иконка закладки</string>
+    <string name="cd_icon_basket">Иконка корзины</string>
+    <string name="cd_icon_profile">Иконка профиля</string>
 </resources>

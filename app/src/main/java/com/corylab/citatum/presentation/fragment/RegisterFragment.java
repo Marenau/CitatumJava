@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +21,10 @@ import com.corylab.citatum.databinding.FragmentRegisterBinding;
 import com.corylab.citatum.presentation.activity.LoginActivity;
 import com.corylab.citatum.presentation.enumeration.AccountStatus;
 import com.corylab.citatum.presentation.fragment.dialog.ShowNotificationFragment;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -100,11 +104,15 @@ public class RegisterFragment extends Fragment {
             auth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(activity, task -> {
                         if (task.isSuccessful()) {
-                            DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");
-                            String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                            usersRef.child(userId).child("username").setValue(username);
+                            FirebaseUser user = auth.getCurrentUser();
+                            String userId = user.getUid();
+                            FirebaseDatabase.getInstance().getReference("users")
+                                    .child(userId).child("username").setValue(username)
+                                    .addOnCompleteListener(task1 -> {
+                                        if (task1.isSuccessful())
+                                            showNotification(AccountStatus.CREATED);
+                                    });
                             FirebaseAuth.getInstance().signOut();
-                            showNotification(AccountStatus.CREATED);
                         } else {
                             showNotification(AccountStatus.REJECTED);
                         }

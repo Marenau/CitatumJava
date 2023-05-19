@@ -47,7 +47,6 @@
     <string name="qc_autosubstitution_title_text">No title</string>
     <string name="qc_autosubstitution_author_text">No author</string>
     <string name="qc_autosubstitution_text_text">Simple text</string>
-    <string name="qc_autosubstitution_page_number_text">0</string>
     <string name="qc_quotes_added">The quote was successfully added.</string>
     <string name="qc_quotes_update">The quote was successfully update.</string>
     <string name="qc_quotes_remove">The quote was placed in the basket.</string>

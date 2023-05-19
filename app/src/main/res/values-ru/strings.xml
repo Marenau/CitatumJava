@@ -47,7 +47,6 @@
     <string name="qc_autosubstitution_title_text">Без заголовка</string>
     <string name="qc_autosubstitution_author_text">Без автора</string>
     <string name="qc_autosubstitution_text_text">Обычный текст.</string>
-    <string name="qc_autosubstitution_page_number_text">0</string>
     <string name="qc_quotes_added">Цитата была успешно добавлена.</string>
     <string name="qc_quotes_update">Цитата была успешно обновлена.</string>
     <string name="qc_quotes_remove">Цитата была помещена в корзину.</string>

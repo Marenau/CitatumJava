@@ -246,13 +246,11 @@ public class QuoteCreateFragment extends Fragment {
                 getString(R.string.qc_autosubstitution_author_text) : binding.qcAuthorEt.getText().toString());
         binding.qcTextEt.setText(binding.qcTextEt.getText().toString().isEmpty() ?
                 getString(R.string.qc_autosubstitution_text_text) : binding.qcTextEt.getText().toString());
-        binding.qcPageNumberEt.setText(binding.qcPageNumberEt.getText().toString().isEmpty() ?
-                getString(R.string.qc_autosubstitution_page_number_text) : binding.qcPageNumberEt.getText().toString());
         thisQuote.setTitle(binding.qcTitleEt.getText().toString().trim());
         thisQuote.setAuthor(binding.qcAuthorEt.getText().toString().trim());
         thisQuote.setText(binding.qcTextEt.getText().toString().trim());
         thisQuote.setDate(Calendar.getInstance().getTimeInMillis());
-        thisQuote.setPageNumber(Integer.parseInt(binding.qcPageNumberEt.getText().toString()));
+        thisQuote.setPageNumber(Integer.parseInt(binding.qcPageNumberEt.getText().toString().isEmpty() ? "0" : binding.qcPageNumberEt.getText().toString()));
     }
 
     private void createUndoSnackbar() {

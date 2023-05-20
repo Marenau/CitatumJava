@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
@@ -16,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.corylab.citatum.R;
 import com.corylab.citatum.network.ForismaticApi;
 import com.corylab.citatum.network.ForismaticQuote;
+import com.corylab.citatum.presentation.viewmodel.NetworkViewModel;
 import com.corylab.citatum.presentation.viewmodel.QuoteViewModel;
 import com.corylab.citatum.presentation.viewmodel.SharedPreferencesViewModel;
 import com.google.firebase.auth.FirebaseAuth;
@@ -45,7 +47,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         SharedPreferencesViewModel sharedPreferencesViewModel = new ViewModelProvider(this).get(SharedPreferencesViewModel.class);
         QuoteViewModel quoteViewModel = new ViewModelProvider(this).get(QuoteViewModel.class);
-        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        NetworkViewModel networkViewModel = new ViewModelProvider(this).get(NetworkViewModel.class);
         long lastRequestTimestamp = sharedPreferencesViewModel.getLong("last_request_timestamp",
                 (Calendar.getInstance().getTimeInMillis() - 24 * 60 * 60 * 1000) - 1);
         Calendar calendar = Calendar.getInstance();
@@ -53,31 +55,12 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         new Handler().postDelayed(() -> {
             if (currentTimestamp - lastRequestTimestamp > 24 * 60 * 60 * 1000) {
-                executorService.execute(() -> {
-                    Retrofit retrofit = new Retrofit.Builder()
-                            .baseUrl("https://api.forismatic.com/")
-                            .addConverterFactory(GsonConverterFactory.create())
-                            .build();
-                    ForismaticApi forismaticApi = retrofit.create(ForismaticApi.class);
-                    Call<ForismaticQuote> call = forismaticApi.getQuote("getQuote", "json", null, "ru");
-                    call.enqueue(new Callback<ForismaticQuote>() {
-                        @Override
-                        public void onResponse(@NonNull Call<ForismaticQuote> call, @NonNull Response<ForismaticQuote> response) {
-                            if (response.isSuccessful()) {
-                                ForismaticQuote forismaticResponse = response.body();
-                                if (forismaticResponse != null) {
-                                    sharedPreferencesViewModel.setString("quote_text", forismaticResponse.getQuoteText());
-                                    sharedPreferencesViewModel.setString("quote_author", forismaticResponse.getQuoteAuthor());
-                                    sharedPreferencesViewModel.setLong("last_request_timestamp", currentTimestamp);
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(@NonNull Call<ForismaticQuote> call, @NonNull Throwable t) {
-                        }
-                    });
-                });
+                ForismaticQuote quote = networkViewModel.getQuote();
+                if (quote != null) {
+                    sharedPreferencesViewModel.setString("quote_text", quote.getQuoteText());
+                    sharedPreferencesViewModel.setString("quote_author", quote.getQuoteAuthor());
+                    sharedPreferencesViewModel.setLong("last_request_timestamp", currentTimestamp);
+                }
             }
 
             FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();

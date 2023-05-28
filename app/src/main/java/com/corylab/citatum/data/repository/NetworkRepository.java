@@ -1,6 +1,6 @@
 package com.corylab.citatum.data.repository;
 
-import com.corylab.citatum.network.ForismaticApi;
+import com.corylab.citatum.data.datasource.NetworkSource;
 import com.corylab.citatum.network.ForismaticQuote;
 
 import java.io.IOException;
@@ -10,26 +10,20 @@ import java.util.concurrent.Executors;
 
 import retrofit2.Call;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class NetworkRepository {
 
-    private final ForismaticApi forismaticApi;
+    private final NetworkSource networkSource;
 
     public NetworkRepository() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.forismatic.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        forismaticApi = retrofit.create(ForismaticApi.class);
+        networkSource = new NetworkSource();
     }
 
     public ForismaticQuote getQuote() {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         try {
             return executor.submit(() -> {
-                Call<ForismaticQuote> call = forismaticApi.getQuote("getQuote", "json", null, "ru");
+                Call<ForismaticQuote> call = networkSource.getForismaticApi().getQuote("getQuote", "json", null, "ru");
                 try {
                     Response<ForismaticQuote> response = call.execute();
                     if (response.isSuccessful()) {

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,11 +20,8 @@ import com.corylab.citatum.databinding.FragmentRegisterBinding;
 import com.corylab.citatum.presentation.activity.LoginActivity;
 import com.corylab.citatum.presentation.enumeration.AccountStatus;
 import com.corylab.citatum.presentation.fragment.dialog.ShowNotificationFragment;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterFragment extends Fragment {
